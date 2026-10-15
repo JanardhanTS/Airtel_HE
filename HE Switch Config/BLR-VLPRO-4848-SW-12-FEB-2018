@@ -1,0 +1,1971 @@
+
+!
+! Last configuration change at 21:22:38 IST Fri May 5 2017 by B0013686
+! NVRAM config last updated at 00:15:00 IST Mon Feb 12 2018
+!
+version 15.0
+no service pad
+service timestamps debug datetime msec
+service timestamps log datetime msec
+service password-encryption
+service compress-config
+!
+hostname BLR-VLPRO-4948-SW
+!
+boot-start-marker
+boot system bootflash:cat4500e-entservices-mz.150-2.SG2.bin
+boot-end-marker
+!
+enable secret 5 $1$G4Wr$7kAkPiVThS.dDdeMymyiv1
+enable password 7 05080F1C2243
+!
+username bhartiadmin password 7 070B35444A1B5D57474359
+!
+!
+aaa new-model
+!
+!
+aaa authentication login default group tacacs+ local
+aaa authentication enable default group tacacs+ enable
+aaa authorization console
+aaa authorization config-commands
+aaa authorization exec default group tacacs+ local 
+aaa authorization commands 0 default group tacacs+ local 
+aaa authorization commands 1 default group tacacs+ local 
+aaa authorization commands 15 default group tacacs+ local 
+aaa accounting exec default start-stop group tacacs+
+aaa accounting commands 0 default start-stop group tacacs+
+aaa accounting commands 1 default start-stop group tacacs+
+aaa accounting commands 15 default start-stop group tacacs+
+aaa accounting connection default start-stop group tacacs+
+aaa accounting system default start-stop group tacacs+
+!
+!
+!
+aaa session-id common
+clock timezone IST 5 30
+ip subnet-zero
+no ip domain-lookup
+ip vrf mgmtVrf
+!
+ip multicast-routing 
+!
+!
+vtp mode transparent
+!
+power redundancy-mode redundant
+!
+!
+!
+archive
+ log config
+  logging enable
+  logging size 500
+  notify syslog contenttype plaintext
+  hidekeys
+file prompt quiet
+!
+spanning-tree mode rapid-pvst
+spanning-tree extend system-id
+!
+vlan internal allocation policy ascending
+!
+vlan 100
+ name HARMONIC-ACQ-OP-VLAN
+!
+vlan 101
+ name HARMONIC-ENC-OP-VLAN
+!
+vlan 102
+ name HARMONIC-MUX-CLR-OP
+!
+vlan 614
+ name MGMT-VLAN
+!
+vlan 990
+ name AGG-ACQ-OP
+!
+vlan 991
+ name AGG-ENC-OP
+!
+vlan 992
+ name AGG-MUX-OP
+!
+vlan 993
+ name Chain-VIEW-VLAN
+!
+vlan 994
+ name MON-IRD-DECODE
+!
+vlan 995
+ name SCR-IP-OP
+!
+!
+!
+interface FastEthernet1
+ ip vrf forwarding mgmtVrf
+ no ip address
+ speed auto
+ duplex auto
+!
+interface GigabitEthernet1/1
+ description ### Connected to ENVIVIO-INGEST-3750-1-G1/0/45 ###
+ no switchport
+ ip address 10.1.166.18 255.255.255.252
+ ip access-group 100 out
+ ip pim sparse-mode
+ load-interval 30
+ spanning-tree portfast
+!
+interface GigabitEthernet1/2
+ description ### Connected to HARMONIC-ACQ-OUTPUT-SW ###
+ switchport access vlan 100
+ switchport mode access
+ ip access-group 100 out
+ load-interval 30
+ spanning-tree portfast
+!
+interface GigabitEthernet1/3
+ description ### Aggrigated Acquition traffic for Monitoring ### 
+ switchport access vlan 990
+ switchport mode access
+ ip access-group 100 in
+ spanning-tree portfast
+!
+interface GigabitEthernet1/4
+ description ### Aggrigated Acquition traffic for Monitoring ### 
+ switchport access vlan 990
+ switchport mode access
+ ip access-group 100 in
+ spanning-tree portfast
+!
+interface GigabitEthernet1/5
+ description ### Aggrigated Acquition traffic for Monitoring ### 
+ switchport access vlan 990
+ switchport mode access
+ ip access-group 100 in
+ spanning-tree portfast
+!
+interface GigabitEthernet1/6
+ description ### Aggrigated Acquition traffic for Monitoring ### 
+ switchport access vlan 990
+ switchport mode access
+ ip access-group 100 in
+ spanning-tree portfast
+!
+interface GigabitEthernet1/7
+ description ### Aggrigated Acquition traffic for Monitoring ### 
+ switchport access vlan 990
+ switchport mode access
+ ip access-group 100 in
+ spanning-tree portfast
+!
+interface GigabitEthernet1/8
+ description ### Aggrigated Acquition traffic for Monitoring ### 
+ switchport access vlan 990
+ switchport mode access
+ ip access-group 100 in
+ spanning-tree portfast
+!
+interface GigabitEthernet1/9
+ description ### Aggrigated Acquition traffic for Monitoring ### 
+ switchport access vlan 990
+ switchport mode access
+ ip access-group 100 in
+ spanning-tree portfast
+!
+interface GigabitEthernet1/10
+ description ### Aggrigated Acquition traffic for Monitoring ### 
+ switchport access vlan 990
+ switchport mode access
+ ip access-group 100 in
+ spanning-tree portfast
+!
+interface GigabitEthernet1/11
+ description ### Aggrigated Acquition traffic for Monitoring ### 
+ switchport access vlan 990
+ switchport mode access
+ ip access-group 100 in
+ spanning-tree portfast
+!
+interface GigabitEthernet1/12
+ description ### Aggrigated Acquition traffic for Monitoring ### 
+ switchport access vlan 990
+ switchport mode access
+ ip access-group 100 in
+ spanning-tree portfast
+!
+interface GigabitEthernet1/13
+ description ### Connected to ENVIVIO-ENC-OP-3750-1-G1/0/18 ###
+ no switchport
+ ip address 10.1.166.22 255.255.255.252
+ ip access-group 100 out
+ ip pim sparse-mode
+ load-interval 30
+ spanning-tree portfast
+!
+interface GigabitEthernet1/14
+ description ### Connected to HARMONIC-ENC-OUTPUT-SW ###
+ switchport access vlan 101
+ switchport mode access
+ ip access-group 100 out
+ load-interval 30
+ spanning-tree portfast
+!
+interface GigabitEthernet1/15
+ description ### Aggrigated Encoder output traffic for Monitoring ###
+ switchport access vlan 991
+ switchport mode access
+ ip access-group 100 in
+ spanning-tree portfast
+!
+interface GigabitEthernet1/16
+ description ### Aggrigated Encoder output traffic for Monitoring ###
+ switchport access vlan 991
+ switchport mode access
+ ip access-group 100 in
+ spanning-tree portfast
+!
+interface GigabitEthernet1/17
+ description ### Aggrigated Encoder output traffic for Monitoring ###
+ switchport access vlan 991
+ switchport mode access
+ ip access-group 100 in
+ spanning-tree portfast
+!
+interface GigabitEthernet1/18
+ description ### Aggrigated Encoder output traffic for Monitoring ###
+ switchport access vlan 991
+ switchport mode access
+ ip access-group 100 in
+ spanning-tree portfast
+!
+interface GigabitEthernet1/19
+ description ### Aggrigated Encoder output traffic for Monitoring ###
+ switchport access vlan 991
+ switchport mode access
+ ip access-group 100 in
+ spanning-tree portfast
+!
+interface GigabitEthernet1/20
+ description ### Aggrigated Encoder output traffic for Monitoring ###
+ switchport access vlan 991
+ switchport mode access
+ ip access-group 100 in
+ spanning-tree portfast
+!
+interface GigabitEthernet1/21
+ description ### Aggrigated Encoder output traffic for Monitoring ###
+ switchport access vlan 991
+ switchport mode access
+ ip access-group 100 in
+ spanning-tree portfast
+!
+interface GigabitEthernet1/22
+ description ### Aggrigated Encoder output traffic for Monitoring ###
+ switchport access vlan 991
+ switchport mode access
+ ip access-group 100 in
+ spanning-tree portfast
+!
+interface GigabitEthernet1/23
+ description ### Aggrigated Encoder output traffic for Monitoring ###
+ switchport access vlan 991
+ switchport mode access
+ ip access-group 100 in
+ spanning-tree portfast
+!
+interface GigabitEthernet1/24
+ description ### Aggrigated Encoder output traffic for Monitoring ###
+ switchport access vlan 991
+ switchport mode access
+ ip access-group 100 in
+ spanning-tree portfast
+!
+interface GigabitEthernet1/25
+ description ### Connected to ENVIVIO-ENC-OP-3750-1-G1/0/39 ###
+ no switchport
+ ip address 10.1.166.26 255.255.255.252
+ ip access-group 100 out
+ ip pim sparse-mode
+ load-interval 30
+ spanning-tree portfast
+!
+interface GigabitEthernet1/26
+ description ### Connected to HARMONIC-MUX-OUTPUT-SW ###
+ switchport access vlan 102
+ switchport mode access
+ ip access-group 100 out
+ load-interval 30
+ spanning-tree portfast
+!
+interface GigabitEthernet1/27
+ description ### Aggrigated MUX output traffic for Monitoring ###
+ switchport access vlan 992
+ switchport mode access
+ ip access-group 100 in
+ spanning-tree portfast
+!
+interface GigabitEthernet1/28
+ description ### Aggrigated MUX output traffic for Monitoring ###
+ switchport access vlan 992
+ switchport mode access
+ ip access-group 100 in
+ spanning-tree portfast
+!
+interface GigabitEthernet1/29
+ description ### Aggrigated MUX output traffic for Monitoring ###
+ switchport access vlan 992
+ switchport mode access
+ ip access-group 100 in
+ spanning-tree portfast
+!
+interface GigabitEthernet1/30
+ description ### Aggrigated MUX output traffic for Monitoring ###
+ switchport access vlan 992
+ switchport mode access
+ ip access-group 100 in
+ spanning-tree portfast
+!
+interface GigabitEthernet1/31
+ description ### Aggrigated MUX output traffic for Monitoring ###
+ switchport access vlan 992
+ switchport mode access
+ ip access-group 100 in
+ spanning-tree portfast
+!
+interface GigabitEthernet1/32
+ description ### Aggrigated MUX output traffic for Monitoring ###
+ switchport access vlan 992
+ switchport mode access
+ ip access-group 100 in
+ spanning-tree portfast
+!
+interface GigabitEthernet1/33
+ description ### Aggrigated MUX output traffic for Monitoring ###
+ switchport access vlan 992
+ switchport mode access
+ ip access-group 100 in
+ spanning-tree portfast
+!
+interface GigabitEthernet1/34
+ description ### Aggrigated MUX output traffic for Monitoring ###
+ switchport access vlan 992
+ switchport mode access
+ ip access-group 100 in
+ spanning-tree portfast
+!
+interface GigabitEthernet1/35
+ description ### Aggrigated MUX output traffic for Monitoring ###
+ switchport access vlan 992
+ switchport mode access
+ ip access-group 100 in
+ spanning-tree portfast
+!
+interface GigabitEthernet1/36
+ description ### Aggrigated MUX output traffic for Monitoring ###
+ switchport access vlan 992
+ switchport mode access
+ ip access-group 100 in
+ spanning-tree portfast
+!
+interface GigabitEthernet1/37
+ description ### Connected to DEXIN-IRD-1-RF-ROOM ###
+ switchport access vlan 994
+ switchport mode access
+ ip access-group 101 in
+ ip access-group 100 out
+ load-interval 30
+ spanning-tree portfast
+!
+interface GigabitEthernet1/38
+ description ### Connected to DEXIN-IRD-2-RF-ROOM ###
+ switchport access vlan 994
+ switchport mode access
+ ip access-group 101 in
+ ip access-group 100 out
+ load-interval 30
+ spanning-tree portfast
+!
+interface GigabitEthernet1/39
+ description ### Connected to MVIP for CHAIN-VIEW-MONITORING-AGG-ACQ-ENC-MUX-OUTPUT ###
+ switchport access vlan 993
+ switchport mode access
+ ip access-group 100 in
+ spanning-tree portfast
+!
+interface GigabitEthernet1/40
+ description ### Connected to MVIP for CHAIN-VIEW-MONITORING-AGG-ACQ-ENC-MUX-OUTPUT ###
+ switchport access vlan 993
+ switchport mode access
+ ip access-group 100 in
+ spanning-tree portfast
+!
+interface GigabitEthernet1/41
+ description ### Connected to DEMODULATED-OUTPUT-OF-STB-VIA-CARD ###
+ switchport access vlan 994
+ switchport mode access
+ ip access-group 101 in
+ ip access-group 100 out
+ load-interval 30
+ spanning-tree portfast
+!
+interface GigabitEthernet1/42
+ description ### Connected to SDI-TO-IP-DEMODULATOR-DEXIN-PORT-OP ###
+ switchport access vlan 994
+ switchport mode access
+ ip access-group 100 out
+ load-interval 30
+ spanning-tree portfast
+!
+interface GigabitEthernet1/43
+ shutdown
+!
+interface GigabitEthernet1/44
+ shutdown
+!
+interface GigabitEthernet1/45
+ description ### Connected to HM-IRD-FOR-SCRAMBLED-INPUT-MONITORING ###
+ switchport access vlan 995
+ switchport mode access
+ load-interval 30
+ spanning-tree portfast
+!
+interface GigabitEthernet1/46
+ description ### Connected to HM-SCR-CARD-FOR-SCRAMBLED-OUTPUT-MONITORING ###
+ switchport access vlan 995
+ switchport mode access
+ load-interval 30
+ spanning-tree portfast
+!
+interface GigabitEthernet1/47
+ shutdown
+!
+interface GigabitEthernet1/48
+ description ### Connected to CORE-INT-SW-3750-Pry-G1/0/15 ###
+ switchport access vlan 614
+ switchport mode access
+ spanning-tree portfast
+!
+interface TenGigabitEthernet1/49
+!
+interface TenGigabitEthernet1/50
+!
+interface TenGigabitEthernet1/51
+!
+interface TenGigabitEthernet1/52
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+interface Vlan100
+ ip address 10.4.22.30 255.255.255.0
+ ip pim sparse-mode
+!
+interface Vlan101
+ ip address 10.4.25.30 255.255.255.0 secondary
+ ip address 10.4.24.30 255.255.255.0
+ no ip redirects
+ ip pim sparse-mode
+!
+interface Vlan614
+ description ### Connected to CORE-3750-Pry-G1/0/15 ###
+ ip address 10.1.4.58 255.255.255.252
+!
+interface Vlan990
+ description ### Aggrigation for ACQ-OUTPUT-VLAN ###
+ ip address 10.1.166.1 255.255.255.252
+ ip access-group 100 in
+ ip pim sparse-mode
+ ip igmp static-group 239.6.0.1 source 10.4.34.1
+ ip igmp static-group 239.6.0.2 source 10.4.34.1
+ ip igmp static-group 239.6.0.3 source 10.4.34.1
+ ip igmp static-group 239.6.0.4 source 10.4.34.1
+ ip igmp static-group 239.6.0.5 source 10.4.34.2
+ ip igmp static-group 239.6.0.6 source 10.4.34.2
+ ip igmp static-group 239.6.0.7 source 10.4.34.2
+ ip igmp static-group 239.6.0.8 source 10.4.34.2
+ ip igmp static-group 239.6.0.9 source 10.4.34.3
+ ip igmp static-group 239.6.0.10 source 10.4.34.3
+ ip igmp static-group 239.6.0.11 source 10.4.34.3
+ ip igmp static-group 239.6.0.12 source 10.4.34.3
+ ip igmp static-group 239.6.0.13 source 10.4.34.4
+ ip igmp static-group 239.6.0.14 source 10.4.34.4
+ ip igmp static-group 239.6.0.15 source 10.4.34.4
+ ip igmp static-group 239.6.0.16 source 10.4.34.4
+ ip igmp static-group 239.6.0.17 source 10.4.34.5
+ ip igmp static-group 239.6.0.18 source 10.4.34.5
+ ip igmp static-group 239.6.0.19 source 10.4.34.5
+ ip igmp static-group 239.6.0.20 source 10.4.34.5
+ ip igmp static-group 239.6.0.21 source 10.4.34.6
+ ip igmp static-group 239.6.0.22 source 10.4.34.6
+ ip igmp static-group 239.6.0.23 source 10.4.34.6
+ ip igmp static-group 239.6.0.24 source 10.4.34.6
+ ip igmp static-group 239.6.0.25 source 10.4.34.7
+ ip igmp static-group 239.6.0.26 source 10.4.34.7
+ ip igmp static-group 239.6.0.27 source 10.4.34.7
+ ip igmp static-group 239.6.0.28 source 10.4.34.7
+ ip igmp static-group 239.6.0.29 source 10.4.34.8
+ ip igmp static-group 239.6.0.30 source 10.4.34.8
+ ip igmp static-group 239.6.0.31 source 10.4.34.8
+ ip igmp static-group 239.6.0.32 source 10.4.34.8
+ ip igmp static-group 239.6.0.33 source 10.4.34.9
+ ip igmp static-group 239.6.0.34 source 10.4.34.9
+ ip igmp static-group 239.6.0.35 source 10.4.34.9
+ ip igmp static-group 239.6.0.36 source 10.4.34.9
+ ip igmp static-group 239.6.0.37 source 10.4.34.10
+ ip igmp static-group 239.6.0.38 source 10.4.34.10
+ ip igmp static-group 239.6.0.39 source 10.4.34.10
+ ip igmp static-group 239.6.0.40 source 10.4.34.10
+ ip igmp static-group 239.6.0.41 source 10.4.34.11
+ ip igmp static-group 239.6.0.42 source 10.4.34.11
+ ip igmp static-group 239.6.0.43 source 10.4.34.11
+ ip igmp static-group 239.6.0.44 source 10.4.34.11
+ ip igmp static-group 239.6.0.45 source 10.4.34.12
+ ip igmp static-group 239.6.0.46 source 10.4.34.12
+ ip igmp static-group 239.6.0.47 source 10.4.34.12
+ ip igmp static-group 239.6.0.48 source 10.4.34.12
+ ip igmp static-group 239.6.0.49 source 10.4.34.13
+ ip igmp static-group 239.6.0.50 source 10.4.34.13
+ ip igmp static-group 239.6.0.51 source 10.4.34.13
+ ip igmp static-group 239.6.0.52 source 10.4.34.13
+ ip igmp static-group 239.6.0.53 source 10.4.34.14
+ ip igmp static-group 239.6.0.54 source 10.4.34.14
+ ip igmp static-group 239.6.0.55 source 10.4.34.14
+ ip igmp static-group 239.6.0.56 source 10.4.34.14
+ ip igmp static-group 239.6.0.57 source 10.4.34.15
+ ip igmp static-group 239.6.0.58 source 10.4.34.15
+ ip igmp static-group 239.6.0.59 source 10.4.34.15
+ ip igmp static-group 239.6.0.60 source 10.4.34.15
+ ip igmp static-group 239.6.0.61 source 10.4.34.16
+ ip igmp static-group 239.6.0.62 source 10.4.34.16
+ ip igmp static-group 239.6.0.63 source 10.4.34.16
+ ip igmp static-group 239.6.0.64 source 10.4.34.16
+ ip igmp static-group 239.6.0.65 source 10.4.34.17
+ ip igmp static-group 239.6.0.66 source 10.4.34.17
+ ip igmp static-group 239.6.0.67 source 10.4.34.17
+ ip igmp static-group 239.6.0.68 source 10.4.34.17
+ ip igmp static-group 239.6.0.69 source 10.4.34.18
+ ip igmp static-group 239.6.0.70 source 10.4.34.18
+ ip igmp static-group 239.6.0.71 source 10.4.34.18
+ ip igmp static-group 239.6.0.72 source 10.4.34.18
+ ip igmp static-group 239.6.0.73 source 10.4.34.19
+ ip igmp static-group 239.6.0.74 source 10.4.34.19
+ ip igmp static-group 239.6.0.75 source 10.4.34.19
+ ip igmp static-group 239.6.0.76 source 10.4.34.19
+ ip igmp static-group 239.6.0.77 source 10.4.34.20
+ ip igmp static-group 239.6.0.78 source 10.4.34.20
+ ip igmp static-group 239.6.0.79 source 10.4.34.20
+ ip igmp static-group 239.6.0.80 source 10.4.34.20
+ ip igmp static-group 239.6.1.1 source 10.4.34.101
+ ip igmp static-group 239.6.1.2 source 10.4.34.101
+ ip igmp static-group 239.6.1.3 source 10.4.34.101
+ ip igmp static-group 239.6.1.4 source 10.4.34.101
+ ip igmp static-group 239.6.1.5 source 10.4.34.102
+ ip igmp static-group 239.6.1.6 source 10.4.34.102
+ ip igmp static-group 239.6.1.7 source 10.4.34.102
+ ip igmp static-group 239.6.1.8 source 10.4.34.102
+ ip igmp static-group 239.6.1.9 source 10.4.34.103
+ ip igmp static-group 239.6.1.10 source 10.4.34.103
+ ip igmp static-group 239.6.1.11 source 10.4.34.103
+ ip igmp static-group 239.6.1.12 source 10.4.34.103
+ ip igmp static-group 239.6.1.13 source 10.4.34.104
+ ip igmp static-group 239.6.1.14 source 10.4.34.104
+ ip igmp static-group 239.6.1.15 source 10.4.34.104
+ ip igmp static-group 239.6.1.16 source 10.4.34.104
+ ip igmp static-group 239.6.1.17 source 10.4.34.105
+ ip igmp static-group 239.6.1.18 source 10.4.34.105
+ ip igmp static-group 239.6.1.19 source 10.4.34.105
+ ip igmp static-group 239.6.1.20 source 10.4.34.105
+ ip igmp static-group 239.6.1.21 source 10.4.34.106
+ ip igmp static-group 239.6.1.22 source 10.4.34.106
+ ip igmp static-group 239.6.1.23 source 10.4.34.106
+ ip igmp static-group 239.6.1.24 source 10.4.34.106
+ ip igmp static-group 239.6.1.25 source 10.4.34.107
+ ip igmp static-group 239.6.1.26 source 10.4.34.107
+ ip igmp static-group 239.6.1.27 source 10.4.34.107
+ ip igmp static-group 239.6.1.28 source 10.4.34.107
+ ip igmp static-group 239.6.1.29 source 10.4.34.108
+ ip igmp static-group 239.6.1.30 source 10.4.34.108
+ ip igmp static-group 239.6.1.31 source 10.4.34.108
+ ip igmp static-group 239.6.1.32 source 10.4.34.108
+ ip igmp static-group 239.6.1.33 source 10.4.34.109
+ ip igmp static-group 239.6.1.34 source 10.4.34.109
+ ip igmp static-group 239.6.1.35 source 10.4.34.109
+ ip igmp static-group 239.6.1.36 source 10.4.34.109
+ ip igmp static-group 239.6.1.37 source 10.4.34.110
+ ip igmp static-group 239.6.1.38 source 10.4.34.110
+ ip igmp static-group 239.6.1.39 source 10.4.34.110
+ ip igmp static-group 239.6.1.40 source 10.4.34.110
+ ip igmp static-group 239.6.1.41 source 10.4.34.111
+ ip igmp static-group 239.6.1.42 source 10.4.34.111
+ ip igmp static-group 239.6.1.43 source 10.4.34.111
+ ip igmp static-group 239.6.1.44 source 10.4.34.111
+ ip igmp static-group 239.6.1.45 source 10.4.34.112
+ ip igmp static-group 239.6.1.46 source 10.4.34.112
+ ip igmp static-group 239.6.1.47 source 10.4.34.112
+ ip igmp static-group 239.6.1.48 source 10.4.34.112
+ ip igmp static-group 239.6.1.49 source 10.4.34.113
+ ip igmp static-group 239.6.1.50 source 10.4.34.113
+ ip igmp static-group 239.6.1.51 source 10.4.34.113
+ ip igmp static-group 239.6.1.52 source 10.4.34.113
+ ip igmp static-group 239.6.1.53 source 10.4.34.114
+ ip igmp static-group 239.6.1.54 source 10.4.34.114
+ ip igmp static-group 239.6.1.55 source 10.4.34.114
+ ip igmp static-group 239.6.1.56 source 10.4.34.114
+ ip igmp static-group 239.6.1.57 source 10.4.34.115
+ ip igmp static-group 239.6.1.58 source 10.4.34.115
+ ip igmp static-group 239.6.1.59 source 10.4.34.115
+ ip igmp static-group 239.6.1.60 source 10.4.34.115
+ ip igmp static-group 239.6.1.61 source 10.4.34.116
+ ip igmp static-group 239.6.1.62 source 10.4.34.116
+ ip igmp static-group 239.6.1.63 source 10.4.34.116
+ ip igmp static-group 239.6.1.64 source 10.4.34.116
+ ip igmp static-group 239.6.1.65 source 10.4.34.117
+ ip igmp static-group 239.6.1.66 source 10.4.34.117
+ ip igmp static-group 239.6.1.67 source 10.4.34.117
+ ip igmp static-group 239.6.1.68 source 10.4.34.117
+ ip igmp static-group 239.6.1.69 source 10.4.34.118
+ ip igmp static-group 239.6.1.70 source 10.4.34.118
+ ip igmp static-group 239.6.1.71 source 10.4.34.118
+ ip igmp static-group 239.6.1.72 source 10.4.34.118
+ ip igmp static-group 239.6.1.73 source 10.4.34.119
+ ip igmp static-group 239.6.1.74 source 10.4.34.119
+ ip igmp static-group 239.6.1.75 source 10.4.34.119
+ ip igmp static-group 239.6.1.76 source 10.4.34.119
+ ip igmp static-group 239.6.1.77 source 10.4.34.120
+ ip igmp static-group 239.6.1.78 source 10.4.34.120
+ ip igmp static-group 239.6.1.79 source 10.4.34.120
+ ip igmp static-group 239.6.1.80 source 10.4.34.120
+ ip igmp static-group 239.5.2.1 source 10.4.22.16
+ ip igmp static-group 239.5.2.2 source 10.4.22.16
+ ip igmp static-group 239.5.2.3 source 10.4.22.16
+ ip igmp static-group 239.5.2.4 source 10.4.22.16
+ ip igmp static-group 239.5.2.5 source 10.4.22.17
+ ip igmp static-group 239.5.2.6 source 10.4.22.17
+ ip igmp static-group 239.5.2.7 source 10.4.22.17
+ ip igmp static-group 239.5.2.8 source 10.4.22.17
+ ip igmp static-group 239.5.2.9 source 10.4.22.18
+ ip igmp static-group 239.5.2.10 source 10.4.22.18
+ ip igmp static-group 239.5.2.11 source 10.4.22.18
+ ip igmp static-group 239.5.2.12 source 10.4.22.18
+ ip igmp static-group 239.5.2.21 source 10.4.22.21
+ ip igmp static-group 239.5.2.22 source 10.4.22.21
+ ip igmp static-group 239.5.2.23 source 10.4.22.21
+ ip igmp static-group 239.5.2.24 source 10.4.22.21
+ ip igmp static-group 239.5.1.1 source 10.4.22.10
+ ip igmp static-group 239.5.1.2 source 10.4.22.10
+ ip igmp static-group 239.5.1.3 source 10.4.22.10
+ ip igmp static-group 239.5.1.4 source 10.4.22.10
+ ip igmp static-group 239.5.1.5 source 10.4.22.11
+ ip igmp static-group 239.5.1.6 source 10.4.22.11
+ ip igmp static-group 239.5.1.7 source 10.4.22.11
+ ip igmp static-group 239.5.1.8 source 10.4.22.11
+ ip igmp static-group 239.5.1.9 source 10.4.22.12
+ ip igmp static-group 239.5.1.10 source 10.4.22.12
+ ip igmp static-group 239.5.1.11 source 10.4.22.12
+ ip igmp static-group 239.5.1.12 source 10.4.22.12
+ ip igmp static-group 239.5.1.21 source 10.4.22.15
+ ip igmp static-group 239.5.1.22 source 10.4.22.15
+ ip igmp static-group 239.5.1.23 source 10.4.22.15
+ ip igmp static-group 239.5.1.24 source 10.4.22.15
+!
+interface Vlan991
+ description ### Aggrigation for ENC-OUTPUT-VLAN ###
+ ip address 10.1.166.5 255.255.255.252
+ ip access-group 100 in
+ ip pim sparse-mode
+ ip igmp static-group 224.6.0.1 source 10.4.35.1
+ ip igmp static-group 224.6.0.2 source 10.4.35.1
+ ip igmp static-group 224.6.0.3 source 10.4.35.1
+ ip igmp static-group 224.6.0.4 source 10.4.35.1
+ ip igmp static-group 224.6.0.5 source 10.4.35.1
+ ip igmp static-group 224.6.0.6 source 10.4.35.1
+ ip igmp static-group 224.6.0.7 source 10.4.35.1
+ ip igmp static-group 224.6.0.8 source 10.4.35.1
+ ip igmp static-group 224.6.0.9 source 10.4.35.1
+ ip igmp static-group 224.6.0.10 source 10.4.35.1
+ ip igmp static-group 224.6.0.11 source 10.4.35.1
+ ip igmp static-group 224.6.0.12 source 10.4.35.1
+ ip igmp static-group 224.6.0.13 source 10.4.35.1
+ ip igmp static-group 224.6.0.14 source 10.4.35.1
+ ip igmp static-group 224.6.0.15 source 10.4.35.1
+ ip igmp static-group 224.6.0.16 source 10.4.35.1
+ ip igmp static-group 224.6.0.17 source 10.4.35.1
+ ip igmp static-group 224.6.0.18 source 10.4.35.1
+ ip igmp static-group 224.6.0.19 source 10.4.35.1
+ ip igmp static-group 224.6.0.20 source 10.4.35.1
+ ip igmp static-group 224.6.0.21 source 10.4.35.1
+ ip igmp static-group 224.6.0.22 source 10.4.35.1
+ ip igmp static-group 224.6.0.23 source 10.4.35.1
+ ip igmp static-group 224.6.0.24 source 10.4.35.1
+ ip igmp static-group 224.6.0.25 source 10.4.35.1
+ ip igmp static-group 224.6.0.26 source 10.4.35.1
+ ip igmp static-group 224.6.0.27 source 10.4.35.1
+ ip igmp static-group 224.6.0.28 source 10.4.35.1
+ ip igmp static-group 224.6.0.29 source 10.4.35.1
+ ip igmp static-group 224.6.0.30 source 10.4.35.1
+ ip igmp static-group 224.6.0.31 source 10.4.35.1
+ ip igmp static-group 224.6.0.32 source 10.4.35.1
+ ip igmp static-group 224.6.0.33 source 10.4.35.1
+ ip igmp static-group 224.6.0.34 source 10.4.35.1
+ ip igmp static-group 224.6.0.35 source 10.4.35.1
+ ip igmp static-group 224.6.0.36 source 10.4.35.1
+ ip igmp static-group 224.6.0.37 source 10.4.35.1
+ ip igmp static-group 224.6.0.38 source 10.4.35.1
+ ip igmp static-group 224.6.0.39 source 10.4.35.1
+ ip igmp static-group 224.6.0.40 source 10.4.35.1
+ ip igmp static-group 224.6.0.41 source 10.4.35.1
+ ip igmp static-group 224.6.0.42 source 10.4.35.1
+ ip igmp static-group 224.6.0.43 source 10.4.35.1
+ ip igmp static-group 224.6.0.44 source 10.4.35.1
+ ip igmp static-group 224.6.0.45 source 10.4.35.1
+ ip igmp static-group 224.6.0.46 source 10.4.35.1
+ ip igmp static-group 224.6.0.47 source 10.4.35.1
+ ip igmp static-group 224.6.0.48 source 10.4.35.1
+ ip igmp static-group 224.6.0.49 source 10.4.35.1
+ ip igmp static-group 224.6.0.50 source 10.4.35.1
+ ip igmp static-group 224.6.0.51 source 10.4.35.2
+ ip igmp static-group 224.6.0.52 source 10.4.35.2
+ ip igmp static-group 224.6.0.53 source 10.4.35.2
+ ip igmp static-group 224.6.0.54 source 10.4.35.2
+ ip igmp static-group 224.6.0.55 source 10.4.35.2
+ ip igmp static-group 224.6.0.56 source 10.4.35.2
+ ip igmp static-group 224.6.0.57 source 10.4.35.2
+ ip igmp static-group 224.6.0.58 source 10.4.35.2
+ ip igmp static-group 224.6.0.59 source 10.4.35.2
+ ip igmp static-group 224.6.0.60 source 10.4.35.2
+ ip igmp static-group 224.6.0.61 source 10.4.35.2
+ ip igmp static-group 224.6.0.62 source 10.4.35.2
+ ip igmp static-group 224.6.0.63 source 10.4.35.2
+ ip igmp static-group 224.6.0.64 source 10.4.35.2
+ ip igmp static-group 224.6.0.65 source 10.4.35.2
+ ip igmp static-group 224.6.0.66 source 10.4.35.2
+ ip igmp static-group 224.6.0.67 source 10.4.35.2
+ ip igmp static-group 224.6.0.68 source 10.4.35.2
+ ip igmp static-group 224.6.0.69 source 10.4.35.2
+ ip igmp static-group 224.6.0.70 source 10.4.35.2
+ ip igmp static-group 224.6.0.71 source 10.4.35.2
+ ip igmp static-group 224.6.0.72 source 10.4.35.2
+ ip igmp static-group 224.6.0.73 source 10.4.35.2
+ ip igmp static-group 224.6.0.74 source 10.4.35.2
+ ip igmp static-group 224.6.0.75 source 10.4.35.2
+ ip igmp static-group 224.6.0.76 source 10.4.35.2
+ ip igmp static-group 224.6.0.77 source 10.4.35.2
+ ip igmp static-group 224.6.0.78 source 10.4.35.2
+ ip igmp static-group 224.6.0.79 source 10.4.35.2
+ ip igmp static-group 224.6.0.80 source 10.4.35.2
+ ip igmp static-group 224.6.0.81 source 10.4.35.2
+ ip igmp static-group 224.6.0.82 source 10.4.35.2
+ ip igmp static-group 224.6.0.83 source 10.4.35.2
+ ip igmp static-group 224.6.0.84 source 10.4.35.2
+ ip igmp static-group 224.6.0.85 source 10.4.35.2
+ ip igmp static-group 224.6.0.86 source 10.4.35.2
+ ip igmp static-group 224.6.0.87 source 10.4.35.2
+ ip igmp static-group 224.6.0.88 source 10.4.35.2
+ ip igmp static-group 224.6.0.89 source 10.4.35.2
+ ip igmp static-group 224.6.0.90 source 10.4.35.2
+ ip igmp static-group 224.6.0.91 source 10.4.35.2
+ ip igmp static-group 224.6.0.92 source 10.4.35.2
+ ip igmp static-group 224.6.0.93 source 10.4.35.2
+ ip igmp static-group 224.6.0.94 source 10.4.35.2
+ ip igmp static-group 224.6.0.95 source 10.4.35.2
+ ip igmp static-group 224.6.0.96 source 10.4.35.2
+ ip igmp static-group 224.6.0.97 source 10.4.35.2
+ ip igmp static-group 224.6.0.98 source 10.4.35.2
+ ip igmp static-group 224.6.0.99 source 10.4.35.2
+ ip igmp static-group 224.6.0.100 source 10.4.35.2
+ ip igmp static-group 224.6.0.101 source 10.4.35.3
+ ip igmp static-group 224.6.0.102 source 10.4.35.3
+ ip igmp static-group 224.6.0.103 source 10.4.35.3
+ ip igmp static-group 224.6.0.104 source 10.4.35.3
+ ip igmp static-group 224.6.0.105 source 10.4.35.3
+ ip igmp static-group 224.6.0.106 source 10.4.35.3
+ ip igmp static-group 224.6.0.107 source 10.4.35.3
+ ip igmp static-group 224.6.0.108 source 10.4.35.3
+ ip igmp static-group 224.6.0.109 source 10.4.35.3
+ ip igmp static-group 224.6.0.110 source 10.4.35.3
+ ip igmp static-group 224.6.0.111 source 10.4.35.3
+ ip igmp static-group 224.6.0.112 source 10.4.35.3
+ ip igmp static-group 224.6.0.113 source 10.4.35.3
+ ip igmp static-group 224.6.0.114 source 10.4.35.3
+ ip igmp static-group 224.6.0.115 source 10.4.35.3
+ ip igmp static-group 224.6.0.116 source 10.4.35.3
+ ip igmp static-group 224.6.0.117 source 10.4.35.3
+ ip igmp static-group 224.6.0.118 source 10.4.35.3
+ ip igmp static-group 224.6.0.119 source 10.4.35.3
+ ip igmp static-group 224.6.0.120 source 10.4.35.3
+ ip igmp static-group 224.6.0.121 source 10.4.35.3
+ ip igmp static-group 224.6.0.122 source 10.4.35.3
+ ip igmp static-group 224.6.0.123 source 10.4.35.3
+ ip igmp static-group 224.6.0.124 source 10.4.35.3
+ ip igmp static-group 224.6.0.125 source 10.4.35.3
+ ip igmp static-group 224.6.0.126 source 10.4.35.3
+ ip igmp static-group 224.6.0.127 source 10.4.35.3
+ ip igmp static-group 224.6.0.128 source 10.4.35.3
+ ip igmp static-group 224.6.0.129 source 10.4.35.3
+ ip igmp static-group 224.6.0.130 source 10.4.35.3
+ ip igmp static-group 224.6.0.131 source 10.4.35.3
+ ip igmp static-group 224.6.0.132 source 10.4.35.3
+ ip igmp static-group 224.6.0.133 source 10.4.35.3
+ ip igmp static-group 224.6.0.134 source 10.4.35.3
+ ip igmp static-group 224.6.0.135 source 10.4.35.3
+ ip igmp static-group 224.6.0.136 source 10.4.35.3
+ ip igmp static-group 224.6.0.137 source 10.4.35.3
+ ip igmp static-group 224.6.0.138 source 10.4.35.3
+ ip igmp static-group 224.6.0.139 source 10.4.35.3
+ ip igmp static-group 224.6.0.140 source 10.4.35.3
+ ip igmp static-group 224.6.0.141 source 10.4.35.3
+ ip igmp static-group 224.6.0.142 source 10.4.35.3
+ ip igmp static-group 224.6.0.143 source 10.4.35.3
+ ip igmp static-group 224.6.0.144 source 10.4.35.3
+ ip igmp static-group 224.6.0.145 source 10.4.35.3
+ ip igmp static-group 224.6.0.146 source 10.4.35.3
+ ip igmp static-group 224.6.0.147 source 10.4.35.3
+ ip igmp static-group 224.6.0.148 source 10.4.35.3
+ ip igmp static-group 224.6.0.149 source 10.4.35.3
+ ip igmp static-group 224.6.0.150 source 10.4.35.3
+ ip igmp static-group 224.6.0.151 source 10.4.35.4
+ ip igmp static-group 224.6.0.152 source 10.4.35.4
+ ip igmp static-group 224.6.0.153 source 10.4.35.4
+ ip igmp static-group 224.6.0.154 source 10.4.35.4
+ ip igmp static-group 224.6.0.155 source 10.4.35.4
+ ip igmp static-group 224.6.0.156 source 10.4.35.4
+ ip igmp static-group 224.6.0.157 source 10.4.35.4
+ ip igmp static-group 224.6.0.158 source 10.4.35.4
+ ip igmp static-group 224.6.0.159 source 10.4.35.4
+ ip igmp static-group 224.6.0.160 source 10.4.35.4
+ ip igmp static-group 224.6.0.161 source 10.4.35.4
+ ip igmp static-group 224.6.0.162 source 10.4.35.4
+ ip igmp static-group 224.6.0.163 source 10.4.35.4
+ ip igmp static-group 224.6.0.164 source 10.4.35.4
+ ip igmp static-group 224.6.0.165 source 10.4.35.4
+ ip igmp static-group 224.6.0.166 source 10.4.35.4
+ ip igmp static-group 224.6.0.167 source 10.4.35.4
+ ip igmp static-group 224.6.0.168 source 10.4.35.4
+ ip igmp static-group 224.6.0.169 source 10.4.35.4
+ ip igmp static-group 224.6.0.170 source 10.4.35.4
+ ip igmp static-group 224.6.0.171 source 10.4.35.4
+ ip igmp static-group 224.6.0.172 source 10.4.35.4
+ ip igmp static-group 224.6.0.173 source 10.4.35.4
+ ip igmp static-group 224.6.0.174 source 10.4.35.4
+ ip igmp static-group 224.6.0.175 source 10.4.35.4
+ ip igmp static-group 224.6.0.176 source 10.4.35.4
+ ip igmp static-group 224.6.0.177 source 10.4.35.4
+ ip igmp static-group 224.6.0.178 source 10.4.35.4
+ ip igmp static-group 224.6.0.179 source 10.4.35.4
+ ip igmp static-group 224.6.0.180 source 10.4.35.4
+ ip igmp static-group 224.6.0.181 source 10.4.35.4
+ ip igmp static-group 224.6.0.182 source 10.4.35.4
+ ip igmp static-group 224.6.0.183 source 10.4.35.4
+ ip igmp static-group 224.6.0.184 source 10.4.35.4
+ ip igmp static-group 224.6.0.185 source 10.4.35.4
+ ip igmp static-group 224.6.0.186 source 10.4.35.4
+ ip igmp static-group 224.6.0.187 source 10.4.35.4
+ ip igmp static-group 224.6.0.188 source 10.4.35.4
+ ip igmp static-group 224.6.0.189 source 10.4.35.4
+ ip igmp static-group 224.6.0.190 source 10.4.35.4
+ ip igmp static-group 224.6.0.191 source 10.4.35.4
+ ip igmp static-group 224.6.0.192 source 10.4.35.4
+ ip igmp static-group 224.6.0.193 source 10.4.35.4
+ ip igmp static-group 224.6.0.194 source 10.4.35.4
+ ip igmp static-group 224.6.0.195 source 10.4.35.4
+ ip igmp static-group 224.6.0.196 source 10.4.35.4
+ ip igmp static-group 224.6.0.197 source 10.4.35.4
+ ip igmp static-group 224.6.0.198 source 10.4.35.4
+ ip igmp static-group 224.6.0.199 source 10.4.35.4
+ ip igmp static-group 224.6.0.200 source 10.4.35.4
+ ip igmp static-group 224.6.0.201 source 10.4.35.6
+ ip igmp static-group 224.6.0.202 source 10.4.35.6
+ ip igmp static-group 224.6.0.203 source 10.4.35.6
+ ip igmp static-group 224.6.0.204 source 10.4.35.6
+ ip igmp static-group 224.6.0.205 source 10.4.35.6
+ ip igmp static-group 224.6.0.206 source 10.4.35.6
+ ip igmp static-group 224.6.0.207 source 10.4.35.6
+ ip igmp static-group 224.6.0.208 source 10.4.35.6
+ ip igmp static-group 224.6.0.209 source 10.4.35.6
+ ip igmp static-group 224.6.0.210 source 10.4.35.6
+ ip igmp static-group 224.6.0.211 source 10.4.35.7
+ ip igmp static-group 224.6.0.212 source 10.4.35.7
+ ip igmp static-group 224.6.0.213 source 10.4.35.7
+ ip igmp static-group 224.6.0.214 source 10.4.35.7
+ ip igmp static-group 224.6.0.215 source 10.4.35.7
+ ip igmp static-group 224.6.0.216 source 10.4.35.7
+ ip igmp static-group 224.6.0.217 source 10.4.35.7
+ ip igmp static-group 224.6.0.218 source 10.4.35.7
+ ip igmp static-group 224.6.0.219 source 10.4.35.7
+ ip igmp static-group 224.6.0.220 source 10.4.35.7
+ ip igmp static-group 224.6.0.221 source 10.4.35.8
+ ip igmp static-group 224.6.0.222 source 10.4.35.8
+ ip igmp static-group 224.6.0.223 source 10.4.35.8
+ ip igmp static-group 224.6.0.224 source 10.4.35.8
+ ip igmp static-group 224.6.0.225 source 10.4.35.8
+ ip igmp static-group 224.6.0.226 source 10.4.35.8
+ ip igmp static-group 224.6.0.227 source 10.4.35.8
+ ip igmp static-group 224.6.0.228 source 10.4.35.8
+ ip igmp static-group 224.6.0.229 source 10.4.35.8
+ ip igmp static-group 224.6.0.230 source 10.4.35.8
+ ip igmp static-group 224.6.0.1 source 10.4.35.5
+ ip igmp static-group 224.6.0.2 source 10.4.35.5
+ ip igmp static-group 224.6.0.3 source 10.4.35.5
+ ip igmp static-group 224.6.0.4 source 10.4.35.5
+ ip igmp static-group 224.6.0.5 source 10.4.35.5
+ ip igmp static-group 224.6.0.6 source 10.4.35.5
+ ip igmp static-group 224.6.0.7 source 10.4.35.5
+ ip igmp static-group 224.6.0.8 source 10.4.35.5
+ ip igmp static-group 224.6.0.9 source 10.4.35.5
+ ip igmp static-group 224.6.0.10 source 10.4.35.5
+ ip igmp static-group 224.6.0.11 source 10.4.35.5
+ ip igmp static-group 224.6.0.12 source 10.4.35.5
+ ip igmp static-group 224.6.0.13 source 10.4.35.5
+ ip igmp static-group 224.6.0.14 source 10.4.35.5
+ ip igmp static-group 224.6.0.15 source 10.4.35.5
+ ip igmp static-group 224.6.0.16 source 10.4.35.5
+ ip igmp static-group 224.6.0.17 source 10.4.35.5
+ ip igmp static-group 224.6.0.18 source 10.4.35.5
+ ip igmp static-group 224.6.0.19 source 10.4.35.5
+ ip igmp static-group 224.6.0.20 source 10.4.35.5
+ ip igmp static-group 224.6.0.21 source 10.4.35.5
+ ip igmp static-group 224.6.0.22 source 10.4.35.5
+ ip igmp static-group 224.6.0.23 source 10.4.35.5
+ ip igmp static-group 224.6.0.24 source 10.4.35.5
+ ip igmp static-group 224.6.0.25 source 10.4.35.5
+ ip igmp static-group 224.6.0.26 source 10.4.35.5
+ ip igmp static-group 224.6.0.27 source 10.4.35.5
+ ip igmp static-group 224.6.0.28 source 10.4.35.5
+ ip igmp static-group 224.6.0.29 source 10.4.35.5
+ ip igmp static-group 224.6.0.30 source 10.4.35.5
+ ip igmp static-group 224.6.0.31 source 10.4.35.5
+ ip igmp static-group 224.6.0.32 source 10.4.35.5
+ ip igmp static-group 224.6.0.33 source 10.4.35.5
+ ip igmp static-group 224.6.0.34 source 10.4.35.5
+ ip igmp static-group 224.6.0.35 source 10.4.35.5
+ ip igmp static-group 224.6.0.36 source 10.4.35.5
+ ip igmp static-group 224.6.0.37 source 10.4.35.5
+ ip igmp static-group 224.6.0.38 source 10.4.35.5
+ ip igmp static-group 224.6.0.39 source 10.4.35.5
+ ip igmp static-group 224.6.0.40 source 10.4.35.5
+ ip igmp static-group 224.6.0.41 source 10.4.35.5
+ ip igmp static-group 224.6.0.42 source 10.4.35.5
+ ip igmp static-group 224.6.0.43 source 10.4.35.5
+ ip igmp static-group 224.6.0.44 source 10.4.35.5
+ ip igmp static-group 224.6.0.45 source 10.4.35.5
+ ip igmp static-group 224.6.0.46 source 10.4.35.5
+ ip igmp static-group 224.6.0.47 source 10.4.35.5
+ ip igmp static-group 224.6.0.48 source 10.4.35.5
+ ip igmp static-group 224.6.0.49 source 10.4.35.5
+ ip igmp static-group 224.6.0.50 source 10.4.35.5
+ ip igmp static-group 224.6.0.51 source 10.4.35.5
+ ip igmp static-group 224.6.0.52 source 10.4.35.5
+ ip igmp static-group 224.6.0.53 source 10.4.35.5
+ ip igmp static-group 224.6.0.54 source 10.4.35.5
+ ip igmp static-group 224.6.0.55 source 10.4.35.5
+ ip igmp static-group 224.6.0.56 source 10.4.35.5
+ ip igmp static-group 224.6.0.57 source 10.4.35.5
+ ip igmp static-group 224.6.0.58 source 10.4.35.5
+ ip igmp static-group 224.6.0.59 source 10.4.35.5
+ ip igmp static-group 224.6.0.60 source 10.4.35.5
+ ip igmp static-group 224.6.0.61 source 10.4.35.5
+ ip igmp static-group 224.6.0.62 source 10.4.35.5
+ ip igmp static-group 224.6.0.63 source 10.4.35.5
+ ip igmp static-group 224.6.0.64 source 10.4.35.5
+ ip igmp static-group 224.6.0.65 source 10.4.35.5
+ ip igmp static-group 224.6.0.66 source 10.4.35.5
+ ip igmp static-group 224.6.0.67 source 10.4.35.5
+ ip igmp static-group 224.6.0.68 source 10.4.35.5
+ ip igmp static-group 224.6.0.69 source 10.4.35.5
+ ip igmp static-group 224.6.0.70 source 10.4.35.5
+ ip igmp static-group 224.6.0.71 source 10.4.35.5
+ ip igmp static-group 224.6.0.72 source 10.4.35.5
+ ip igmp static-group 224.6.0.73 source 10.4.35.5
+ ip igmp static-group 224.6.0.74 source 10.4.35.5
+ ip igmp static-group 224.6.0.75 source 10.4.35.5
+ ip igmp static-group 224.6.0.76 source 10.4.35.5
+ ip igmp static-group 224.6.0.77 source 10.4.35.5
+ ip igmp static-group 224.6.0.78 source 10.4.35.5
+ ip igmp static-group 224.6.0.79 source 10.4.35.5
+ ip igmp static-group 224.6.0.80 source 10.4.35.5
+ ip igmp static-group 224.6.0.81 source 10.4.35.5
+ ip igmp static-group 224.6.0.82 source 10.4.35.5
+ ip igmp static-group 224.6.0.83 source 10.4.35.5
+ ip igmp static-group 224.6.0.84 source 10.4.35.5
+ ip igmp static-group 224.6.0.85 source 10.4.35.5
+ ip igmp static-group 224.6.0.86 source 10.4.35.5
+ ip igmp static-group 224.6.0.87 source 10.4.35.5
+ ip igmp static-group 224.6.0.88 source 10.4.35.5
+ ip igmp static-group 224.6.0.89 source 10.4.35.5
+ ip igmp static-group 224.6.0.90 source 10.4.35.5
+ ip igmp static-group 224.6.0.91 source 10.4.35.5
+ ip igmp static-group 224.6.0.92 source 10.4.35.5
+ ip igmp static-group 224.6.0.93 source 10.4.35.5
+ ip igmp static-group 224.6.0.94 source 10.4.35.5
+ ip igmp static-group 224.6.0.95 source 10.4.35.5
+ ip igmp static-group 224.6.0.96 source 10.4.35.5
+ ip igmp static-group 224.6.0.97 source 10.4.35.5
+ ip igmp static-group 224.6.0.98 source 10.4.35.5
+ ip igmp static-group 224.6.0.99 source 10.4.35.5
+ ip igmp static-group 224.6.0.100 source 10.4.35.5
+ ip igmp static-group 224.6.0.101 source 10.4.35.5
+ ip igmp static-group 224.6.0.102 source 10.4.35.5
+ ip igmp static-group 224.6.0.103 source 10.4.35.5
+ ip igmp static-group 224.6.0.104 source 10.4.35.5
+ ip igmp static-group 224.6.0.105 source 10.4.35.5
+ ip igmp static-group 224.6.0.106 source 10.4.35.5
+ ip igmp static-group 224.6.0.107 source 10.4.35.5
+ ip igmp static-group 224.6.0.108 source 10.4.35.5
+ ip igmp static-group 224.6.0.109 source 10.4.35.5
+ ip igmp static-group 224.6.0.110 source 10.4.35.5
+ ip igmp static-group 224.6.0.111 source 10.4.35.5
+ ip igmp static-group 224.6.0.112 source 10.4.35.5
+ ip igmp static-group 224.6.0.113 source 10.4.35.5
+ ip igmp static-group 224.6.0.114 source 10.4.35.5
+ ip igmp static-group 224.6.0.115 source 10.4.35.5
+ ip igmp static-group 224.6.0.116 source 10.4.35.5
+ ip igmp static-group 224.6.0.117 source 10.4.35.5
+ ip igmp static-group 224.6.0.118 source 10.4.35.5
+ ip igmp static-group 224.6.0.119 source 10.4.35.5
+ ip igmp static-group 224.6.0.120 source 10.4.35.5
+ ip igmp static-group 224.6.0.121 source 10.4.35.5
+ ip igmp static-group 224.6.0.122 source 10.4.35.5
+ ip igmp static-group 224.6.0.123 source 10.4.35.5
+ ip igmp static-group 224.6.0.124 source 10.4.35.5
+ ip igmp static-group 224.6.0.125 source 10.4.35.5
+ ip igmp static-group 224.6.0.126 source 10.4.35.5
+ ip igmp static-group 224.6.0.127 source 10.4.35.5
+ ip igmp static-group 224.6.0.128 source 10.4.35.5
+ ip igmp static-group 224.6.0.129 source 10.4.35.5
+ ip igmp static-group 224.6.0.130 source 10.4.35.5
+ ip igmp static-group 224.6.0.131 source 10.4.35.5
+ ip igmp static-group 224.6.0.132 source 10.4.35.5
+ ip igmp static-group 224.6.0.133 source 10.4.35.5
+ ip igmp static-group 224.6.0.134 source 10.4.35.5
+ ip igmp static-group 224.6.0.135 source 10.4.35.5
+ ip igmp static-group 224.6.0.136 source 10.4.35.5
+ ip igmp static-group 224.6.0.137 source 10.4.35.5
+ ip igmp static-group 224.6.0.138 source 10.4.35.5
+ ip igmp static-group 224.6.0.139 source 10.4.35.5
+ ip igmp static-group 224.6.0.140 source 10.4.35.5
+ ip igmp static-group 224.6.0.141 source 10.4.35.5
+ ip igmp static-group 224.6.0.142 source 10.4.35.5
+ ip igmp static-group 224.6.0.143 source 10.4.35.5
+ ip igmp static-group 224.6.0.144 source 10.4.35.5
+ ip igmp static-group 224.6.0.145 source 10.4.35.5
+ ip igmp static-group 224.6.0.146 source 10.4.35.5
+ ip igmp static-group 224.6.0.147 source 10.4.35.5
+ ip igmp static-group 224.6.0.148 source 10.4.35.5
+ ip igmp static-group 224.6.0.149 source 10.4.35.5
+ ip igmp static-group 224.6.0.150 source 10.4.35.5
+ ip igmp static-group 224.6.0.151 source 10.4.35.5
+ ip igmp static-group 224.6.0.152 source 10.4.35.5
+ ip igmp static-group 224.6.0.153 source 10.4.35.5
+ ip igmp static-group 224.6.0.154 source 10.4.35.5
+ ip igmp static-group 224.6.0.155 source 10.4.35.5
+ ip igmp static-group 224.6.0.156 source 10.4.35.5
+ ip igmp static-group 224.6.0.157 source 10.4.35.5
+ ip igmp static-group 224.6.0.158 source 10.4.35.5
+ ip igmp static-group 224.6.0.159 source 10.4.35.5
+ ip igmp static-group 224.6.0.160 source 10.4.35.5
+ ip igmp static-group 224.6.0.161 source 10.4.35.5
+ ip igmp static-group 224.6.0.162 source 10.4.35.5
+ ip igmp static-group 224.6.0.163 source 10.4.35.5
+ ip igmp static-group 224.6.0.164 source 10.4.35.5
+ ip igmp static-group 224.6.0.165 source 10.4.35.5
+ ip igmp static-group 224.6.0.166 source 10.4.35.5
+ ip igmp static-group 224.6.0.167 source 10.4.35.5
+ ip igmp static-group 224.6.0.168 source 10.4.35.5
+ ip igmp static-group 224.6.0.169 source 10.4.35.5
+ ip igmp static-group 224.6.0.170 source 10.4.35.5
+ ip igmp static-group 224.6.0.171 source 10.4.35.5
+ ip igmp static-group 224.6.0.172 source 10.4.35.5
+ ip igmp static-group 224.6.0.173 source 10.4.35.5
+ ip igmp static-group 224.6.0.174 source 10.4.35.5
+ ip igmp static-group 224.6.0.175 source 10.4.35.5
+ ip igmp static-group 224.6.0.176 source 10.4.35.5
+ ip igmp static-group 224.6.0.177 source 10.4.35.5
+ ip igmp static-group 224.6.0.178 source 10.4.35.5
+ ip igmp static-group 224.6.0.179 source 10.4.35.5
+ ip igmp static-group 224.6.0.180 source 10.4.35.5
+ ip igmp static-group 224.6.0.181 source 10.4.35.5
+ ip igmp static-group 224.6.0.182 source 10.4.35.5
+ ip igmp static-group 224.6.0.183 source 10.4.35.5
+ ip igmp static-group 224.6.0.184 source 10.4.35.5
+ ip igmp static-group 224.6.0.185 source 10.4.35.5
+ ip igmp static-group 224.6.0.186 source 10.4.35.5
+ ip igmp static-group 224.6.0.187 source 10.4.35.5
+ ip igmp static-group 224.6.0.188 source 10.4.35.5
+ ip igmp static-group 224.6.0.189 source 10.4.35.5
+ ip igmp static-group 224.6.0.190 source 10.4.35.5
+ ip igmp static-group 224.6.0.191 source 10.4.35.5
+ ip igmp static-group 224.6.0.192 source 10.4.35.5
+ ip igmp static-group 224.6.0.193 source 10.4.35.5
+ ip igmp static-group 224.6.0.194 source 10.4.35.5
+ ip igmp static-group 224.6.0.195 source 10.4.35.5
+ ip igmp static-group 224.6.0.196 source 10.4.35.5
+ ip igmp static-group 224.6.0.197 source 10.4.35.5
+ ip igmp static-group 224.6.0.198 source 10.4.35.5
+ ip igmp static-group 224.6.0.199 source 10.4.35.5
+ ip igmp static-group 224.6.0.200 source 10.4.35.5
+ ip igmp static-group 224.6.0.201 source 10.4.35.9
+ ip igmp static-group 224.6.0.202 source 10.4.35.9
+ ip igmp static-group 224.6.0.203 source 10.4.35.9
+ ip igmp static-group 224.6.0.204 source 10.4.35.9
+ ip igmp static-group 224.6.0.205 source 10.4.35.9
+ ip igmp static-group 224.6.0.206 source 10.4.35.9
+ ip igmp static-group 224.6.0.207 source 10.4.35.9
+ ip igmp static-group 224.6.0.208 source 10.4.35.9
+ ip igmp static-group 224.6.0.209 source 10.4.35.9
+ ip igmp static-group 224.6.0.210 source 10.4.35.9
+ ip igmp static-group 224.6.0.211 source 10.4.35.9
+ ip igmp static-group 224.6.0.212 source 10.4.35.9
+ ip igmp static-group 224.6.0.213 source 10.4.35.9
+ ip igmp static-group 224.6.0.214 source 10.4.35.9
+ ip igmp static-group 224.6.0.215 source 10.4.35.9
+ ip igmp static-group 224.6.0.216 source 10.4.35.9
+ ip igmp static-group 224.6.0.217 source 10.4.35.9
+ ip igmp static-group 224.6.0.218 source 10.4.35.9
+ ip igmp static-group 224.6.0.219 source 10.4.35.9
+ ip igmp static-group 224.6.0.220 source 10.4.35.9
+ ip igmp static-group 224.6.0.221 source 10.4.35.9
+ ip igmp static-group 224.6.0.222 source 10.4.35.9
+ ip igmp static-group 224.6.0.223 source 10.4.35.9
+ ip igmp static-group 224.6.0.224 source 10.4.35.9
+ ip igmp static-group 224.6.0.225 source 10.4.35.9
+ ip igmp static-group 224.6.0.226 source 10.4.35.9
+ ip igmp static-group 224.6.0.227 source 10.4.35.9
+ ip igmp static-group 224.6.0.228 source 10.4.35.9
+ ip igmp static-group 224.6.0.229 source 10.4.35.9
+ ip igmp static-group 224.6.0.230 source 10.4.35.9
+ ip igmp static-group 224.6.0.152 source 10.4.35.2
+ ip igmp static-group 224.6.0.153 source 10.4.35.2
+!
+interface Vlan992
+ description ### Aggrigation for MUX-OUTPUT-VLAN ###
+ ip address 10.1.166.9 255.255.255.252
+ ip access-group 100 in
+ ip pim sparse-mode
+ ip igmp static-group 239.7.0.52 source 10.4.36.201
+ ip igmp static-group 239.7.0.53 source 10.4.36.201
+ ip igmp static-group 239.7.0.51 source 10.4.36.201
+ ip igmp static-group 239.7.0.54 source 10.4.36.201
+ ip igmp static-group 239.7.0.55 source 10.4.36.201
+ ip igmp static-group 239.7.0.56 source 10.4.36.201
+ ip igmp static-group 239.7.0.57 source 10.4.36.201
+ ip igmp static-group 239.7.0.58 source 10.4.36.201
+ ip igmp static-group 239.7.0.59 source 10.4.36.201
+ ip igmp static-group 239.7.0.60 source 10.4.36.201
+ ip igmp static-group 239.7.0.61 source 10.4.36.201
+ ip igmp static-group 239.7.0.62 source 10.4.36.201
+ ip igmp static-group 239.7.0.51 source 10.4.36.211
+ ip igmp static-group 239.7.0.52 source 10.4.36.211
+ ip igmp static-group 239.7.0.53 source 10.4.36.211
+ ip igmp static-group 239.7.0.54 source 10.4.36.211
+ ip igmp static-group 239.7.0.55 source 10.4.36.211
+ ip igmp static-group 239.7.0.56 source 10.4.36.211
+ ip igmp static-group 239.7.0.57 source 10.4.36.211
+ ip igmp static-group 239.7.0.58 source 10.4.36.211
+ ip igmp static-group 239.7.0.59 source 10.4.36.211
+ ip igmp static-group 239.7.0.60 source 10.4.36.211
+ ip igmp static-group 239.7.0.61 source 10.4.36.211
+ ip igmp static-group 239.7.0.62 source 10.4.36.211
+ ip igmp static-group 239.7.0.51 source 10.4.36.202
+ ip igmp static-group 239.7.0.52 source 10.4.36.202
+ ip igmp static-group 239.7.0.53 source 10.4.36.202
+ ip igmp static-group 239.7.0.54 source 10.4.36.202
+ ip igmp static-group 239.7.0.55 source 10.4.36.202
+ ip igmp static-group 239.7.0.56 source 10.4.36.202
+ ip igmp static-group 239.7.0.57 source 10.4.36.202
+ ip igmp static-group 239.7.0.58 source 10.4.36.202
+ ip igmp static-group 239.7.0.59 source 10.4.36.202
+ ip igmp static-group 239.7.0.60 source 10.4.36.202
+ ip igmp static-group 239.7.0.61 source 10.4.36.202
+ ip igmp static-group 239.7.0.62 source 10.4.36.202
+ ip igmp static-group 239.7.0.51 source 10.4.36.212
+ ip igmp static-group 239.7.0.52 source 10.4.36.212
+ ip igmp static-group 239.7.0.53 source 10.4.36.212
+ ip igmp static-group 239.7.0.54 source 10.4.36.212
+ ip igmp static-group 239.7.0.55 source 10.4.36.212
+ ip igmp static-group 239.7.0.56 source 10.4.36.212
+ ip igmp static-group 239.7.0.57 source 10.4.36.212
+ ip igmp static-group 239.7.0.58 source 10.4.36.212
+ ip igmp static-group 239.7.0.59 source 10.4.36.212
+ ip igmp static-group 239.7.0.60 source 10.4.36.212
+ ip igmp static-group 239.7.0.61 source 10.4.36.212
+ ip igmp static-group 239.7.0.62 source 10.4.36.212
+!
+interface Vlan993
+ description ### Aggrigated Output of ACQ-ENC-MUX for Chain VIEW ###
+ ip address 10.1.166.13 255.255.255.252
+ ip access-group 100 in
+ ip pim sparse-mode
+ ip igmp static-group 239.6.0.1 source 10.4.34.1
+ ip igmp static-group 239.6.0.2 source 10.4.34.1
+ ip igmp static-group 239.6.0.3 source 10.4.34.1
+ ip igmp static-group 239.6.0.4 source 10.4.34.1
+ ip igmp static-group 239.6.0.5 source 10.4.34.2
+ ip igmp static-group 239.6.0.6 source 10.4.34.2
+ ip igmp static-group 239.6.0.7 source 10.4.34.2
+ ip igmp static-group 239.6.0.8 source 10.4.34.2
+ ip igmp static-group 239.6.0.9 source 10.4.34.3
+ ip igmp static-group 239.6.0.10 source 10.4.34.3
+ ip igmp static-group 239.6.0.11 source 10.4.34.3
+ ip igmp static-group 239.6.0.12 source 10.4.34.3
+ ip igmp static-group 239.6.0.13 source 10.4.34.4
+ ip igmp static-group 239.6.0.14 source 10.4.34.4
+ ip igmp static-group 239.6.0.15 source 10.4.34.4
+ ip igmp static-group 239.6.0.16 source 10.4.34.4
+ ip igmp static-group 239.6.0.17 source 10.4.34.5
+ ip igmp static-group 239.6.0.18 source 10.4.34.5
+ ip igmp static-group 239.6.0.19 source 10.4.34.5
+ ip igmp static-group 239.6.0.20 source 10.4.34.5
+ ip igmp static-group 239.6.0.21 source 10.4.34.6
+ ip igmp static-group 239.6.0.22 source 10.4.34.6
+ ip igmp static-group 239.6.0.23 source 10.4.34.6
+ ip igmp static-group 239.6.0.24 source 10.4.34.6
+ ip igmp static-group 239.6.0.25 source 10.4.34.7
+ ip igmp static-group 239.6.0.26 source 10.4.34.7
+ ip igmp static-group 239.6.0.27 source 10.4.34.7
+ ip igmp static-group 239.6.0.28 source 10.4.34.7
+ ip igmp static-group 239.6.0.29 source 10.4.34.8
+ ip igmp static-group 239.6.0.30 source 10.4.34.8
+ ip igmp static-group 239.6.0.31 source 10.4.34.8
+ ip igmp static-group 239.6.0.32 source 10.4.34.8
+ ip igmp static-group 239.6.0.33 source 10.4.34.9
+ ip igmp static-group 239.6.0.34 source 10.4.34.9
+ ip igmp static-group 239.6.0.35 source 10.4.34.9
+ ip igmp static-group 239.6.0.36 source 10.4.34.9
+ ip igmp static-group 239.6.0.37 source 10.4.34.10
+ ip igmp static-group 239.6.0.38 source 10.4.34.10
+ ip igmp static-group 239.6.0.39 source 10.4.34.10
+ ip igmp static-group 239.6.0.40 source 10.4.34.10
+ ip igmp static-group 239.6.0.41 source 10.4.34.11
+ ip igmp static-group 239.6.0.42 source 10.4.34.11
+ ip igmp static-group 239.6.0.43 source 10.4.34.11
+ ip igmp static-group 239.6.0.44 source 10.4.34.11
+ ip igmp static-group 239.6.0.45 source 10.4.34.12
+ ip igmp static-group 239.6.0.46 source 10.4.34.12
+ ip igmp static-group 239.6.0.47 source 10.4.34.12
+ ip igmp static-group 239.6.0.48 source 10.4.34.12
+ ip igmp static-group 239.6.0.49 source 10.4.34.13
+ ip igmp static-group 239.6.0.50 source 10.4.34.13
+ ip igmp static-group 239.6.0.51 source 10.4.34.13
+ ip igmp static-group 239.6.0.52 source 10.4.34.13
+ ip igmp static-group 239.6.0.53 source 10.4.34.14
+ ip igmp static-group 239.6.0.54 source 10.4.34.14
+ ip igmp static-group 239.6.0.55 source 10.4.34.14
+ ip igmp static-group 239.6.0.56 source 10.4.34.14
+ ip igmp static-group 239.6.0.57 source 10.4.34.15
+ ip igmp static-group 239.6.0.58 source 10.4.34.15
+ ip igmp static-group 239.6.0.59 source 10.4.34.15
+ ip igmp static-group 239.6.0.60 source 10.4.34.15
+ ip igmp static-group 239.6.0.61 source 10.4.34.16
+ ip igmp static-group 239.6.0.62 source 10.4.34.16
+ ip igmp static-group 239.6.0.63 source 10.4.34.16
+ ip igmp static-group 239.6.0.64 source 10.4.34.16
+ ip igmp static-group 239.6.0.65 source 10.4.34.17
+ ip igmp static-group 239.6.0.66 source 10.4.34.17
+ ip igmp static-group 239.6.0.67 source 10.4.34.17
+ ip igmp static-group 239.6.0.68 source 10.4.34.17
+ ip igmp static-group 239.6.0.69 source 10.4.34.18
+ ip igmp static-group 239.6.0.70 source 10.4.34.18
+ ip igmp static-group 239.6.0.71 source 10.4.34.18
+ ip igmp static-group 239.6.0.72 source 10.4.34.18
+ ip igmp static-group 239.6.0.73 source 10.4.34.19
+ ip igmp static-group 239.6.0.74 source 10.4.34.19
+ ip igmp static-group 239.6.0.75 source 10.4.34.19
+ ip igmp static-group 239.6.0.76 source 10.4.34.19
+ ip igmp static-group 239.6.0.77 source 10.4.34.20
+ ip igmp static-group 239.6.0.78 source 10.4.34.20
+ ip igmp static-group 239.6.0.79 source 10.4.34.20
+ ip igmp static-group 239.6.0.80 source 10.4.34.20
+ ip igmp static-group 224.6.0.1 source 10.4.35.1
+ ip igmp static-group 224.6.0.2 source 10.4.35.1
+ ip igmp static-group 224.6.0.3 source 10.4.35.1
+ ip igmp static-group 224.6.0.4 source 10.4.35.1
+ ip igmp static-group 224.6.0.5 source 10.4.35.1
+ ip igmp static-group 224.6.0.6 source 10.4.35.1
+ ip igmp static-group 224.6.0.7 source 10.4.35.1
+ ip igmp static-group 224.6.0.8 source 10.4.35.1
+ ip igmp static-group 224.6.0.9 source 10.4.35.1
+ ip igmp static-group 224.6.0.10 source 10.4.35.1
+ ip igmp static-group 224.6.0.11 source 10.4.35.1
+ ip igmp static-group 224.6.0.12 source 10.4.35.1
+ ip igmp static-group 224.6.0.13 source 10.4.35.1
+ ip igmp static-group 224.6.0.14 source 10.4.35.1
+ ip igmp static-group 224.6.0.15 source 10.4.35.1
+ ip igmp static-group 224.6.0.16 source 10.4.35.1
+ ip igmp static-group 224.6.0.17 source 10.4.35.1
+ ip igmp static-group 224.6.0.18 source 10.4.35.1
+ ip igmp static-group 224.6.0.19 source 10.4.35.1
+ ip igmp static-group 224.6.0.20 source 10.4.35.1
+ ip igmp static-group 224.6.0.21 source 10.4.35.1
+ ip igmp static-group 224.6.0.22 source 10.4.35.1
+ ip igmp static-group 224.6.0.23 source 10.4.35.1
+ ip igmp static-group 224.6.0.24 source 10.4.35.1
+ ip igmp static-group 224.6.0.25 source 10.4.35.1
+ ip igmp static-group 224.6.0.26 source 10.4.35.1
+ ip igmp static-group 224.6.0.27 source 10.4.35.1
+ ip igmp static-group 224.6.0.28 source 10.4.35.1
+ ip igmp static-group 224.6.0.29 source 10.4.35.1
+ ip igmp static-group 224.6.0.30 source 10.4.35.1
+ ip igmp static-group 224.6.0.31 source 10.4.35.1
+ ip igmp static-group 224.6.0.32 source 10.4.35.1
+ ip igmp static-group 224.6.0.33 source 10.4.35.1
+ ip igmp static-group 224.6.0.34 source 10.4.35.1
+ ip igmp static-group 224.6.0.35 source 10.4.35.1
+ ip igmp static-group 224.6.0.36 source 10.4.35.1
+ ip igmp static-group 224.6.0.37 source 10.4.35.1
+ ip igmp static-group 224.6.0.38 source 10.4.35.1
+ ip igmp static-group 224.6.0.39 source 10.4.35.1
+ ip igmp static-group 224.6.0.40 source 10.4.35.1
+ ip igmp static-group 224.6.0.41 source 10.4.35.1
+ ip igmp static-group 224.6.0.42 source 10.4.35.1
+ ip igmp static-group 224.6.0.43 source 10.4.35.1
+ ip igmp static-group 224.6.0.44 source 10.4.35.1
+ ip igmp static-group 224.6.0.45 source 10.4.35.1
+ ip igmp static-group 224.6.0.46 source 10.4.35.1
+ ip igmp static-group 224.6.0.47 source 10.4.35.1
+ ip igmp static-group 224.6.0.48 source 10.4.35.1
+ ip igmp static-group 224.6.0.49 source 10.4.35.1
+ ip igmp static-group 224.6.0.50 source 10.4.35.1
+ ip igmp static-group 224.6.0.51 source 10.4.35.2
+ ip igmp static-group 224.6.0.52 source 10.4.35.2
+ ip igmp static-group 224.6.0.53 source 10.4.35.2
+ ip igmp static-group 224.6.0.54 source 10.4.35.2
+ ip igmp static-group 224.6.0.55 source 10.4.35.2
+ ip igmp static-group 224.6.0.56 source 10.4.35.2
+ ip igmp static-group 224.6.0.57 source 10.4.35.2
+ ip igmp static-group 224.6.0.58 source 10.4.35.2
+ ip igmp static-group 224.6.0.59 source 10.4.35.2
+ ip igmp static-group 224.6.0.60 source 10.4.35.2
+ ip igmp static-group 224.6.0.61 source 10.4.35.2
+ ip igmp static-group 224.6.0.62 source 10.4.35.2
+ ip igmp static-group 224.6.0.63 source 10.4.35.2
+ ip igmp static-group 224.6.0.64 source 10.4.35.2
+ ip igmp static-group 224.6.0.65 source 10.4.35.2
+ ip igmp static-group 224.6.0.66 source 10.4.35.2
+ ip igmp static-group 224.6.0.67 source 10.4.35.2
+ ip igmp static-group 224.6.0.68 source 10.4.35.2
+ ip igmp static-group 224.6.0.69 source 10.4.35.2
+ ip igmp static-group 224.6.0.70 source 10.4.35.2
+ ip igmp static-group 224.6.0.71 source 10.4.35.2
+ ip igmp static-group 224.6.0.72 source 10.4.35.2
+ ip igmp static-group 224.6.0.73 source 10.4.35.2
+ ip igmp static-group 224.6.0.74 source 10.4.35.2
+ ip igmp static-group 224.6.0.75 source 10.4.35.2
+ ip igmp static-group 224.6.0.76 source 10.4.35.2
+ ip igmp static-group 224.6.0.77 source 10.4.35.2
+ ip igmp static-group 224.6.0.78 source 10.4.35.2
+ ip igmp static-group 224.6.0.79 source 10.4.35.2
+ ip igmp static-group 224.6.0.80 source 10.4.35.2
+ ip igmp static-group 224.6.0.81 source 10.4.35.2
+ ip igmp static-group 224.6.0.82 source 10.4.35.2
+ ip igmp static-group 224.6.0.83 source 10.4.35.2
+ ip igmp static-group 224.6.0.84 source 10.4.35.2
+ ip igmp static-group 224.6.0.85 source 10.4.35.2
+ ip igmp static-group 224.6.0.86 source 10.4.35.2
+ ip igmp static-group 224.6.0.87 source 10.4.35.2
+ ip igmp static-group 224.6.0.88 source 10.4.35.2
+ ip igmp static-group 224.6.0.89 source 10.4.35.2
+ ip igmp static-group 224.6.0.90 source 10.4.35.2
+ ip igmp static-group 224.6.0.91 source 10.4.35.2
+ ip igmp static-group 224.6.0.92 source 10.4.35.2
+ ip igmp static-group 224.6.0.93 source 10.4.35.2
+ ip igmp static-group 224.6.0.94 source 10.4.35.2
+ ip igmp static-group 224.6.0.95 source 10.4.35.2
+ ip igmp static-group 224.6.0.96 source 10.4.35.2
+ ip igmp static-group 224.6.0.97 source 10.4.35.2
+ ip igmp static-group 224.6.0.98 source 10.4.35.2
+ ip igmp static-group 224.6.0.99 source 10.4.35.2
+ ip igmp static-group 224.6.0.100 source 10.4.35.2
+ ip igmp static-group 224.6.0.101 source 10.4.35.3
+ ip igmp static-group 224.6.0.102 source 10.4.35.3
+ ip igmp static-group 224.6.0.103 source 10.4.35.3
+ ip igmp static-group 224.6.0.104 source 10.4.35.3
+ ip igmp static-group 224.6.0.105 source 10.4.35.3
+ ip igmp static-group 224.6.0.106 source 10.4.35.3
+ ip igmp static-group 224.6.0.107 source 10.4.35.3
+ ip igmp static-group 224.6.0.108 source 10.4.35.3
+ ip igmp static-group 224.6.0.109 source 10.4.35.3
+ ip igmp static-group 224.6.0.110 source 10.4.35.3
+ ip igmp static-group 224.6.0.111 source 10.4.35.3
+ ip igmp static-group 224.6.0.112 source 10.4.35.3
+ ip igmp static-group 224.6.0.113 source 10.4.35.3
+ ip igmp static-group 224.6.0.114 source 10.4.35.3
+ ip igmp static-group 224.6.0.115 source 10.4.35.3
+ ip igmp static-group 224.6.0.116 source 10.4.35.3
+ ip igmp static-group 224.6.0.117 source 10.4.35.3
+ ip igmp static-group 224.6.0.118 source 10.4.35.3
+ ip igmp static-group 224.6.0.119 source 10.4.35.3
+ ip igmp static-group 224.6.0.120 source 10.4.35.3
+ ip igmp static-group 224.6.0.121 source 10.4.35.3
+ ip igmp static-group 224.6.0.122 source 10.4.35.3
+ ip igmp static-group 224.6.0.123 source 10.4.35.3
+ ip igmp static-group 224.6.0.124 source 10.4.35.3
+ ip igmp static-group 224.6.0.125 source 10.4.35.3
+ ip igmp static-group 224.6.0.126 source 10.4.35.3
+ ip igmp static-group 224.6.0.127 source 10.4.35.3
+ ip igmp static-group 224.6.0.128 source 10.4.35.3
+ ip igmp static-group 224.6.0.129 source 10.4.35.3
+ ip igmp static-group 224.6.0.130 source 10.4.35.3
+ ip igmp static-group 224.6.0.131 source 10.4.35.3
+ ip igmp static-group 224.6.0.132 source 10.4.35.3
+ ip igmp static-group 224.6.0.133 source 10.4.35.3
+ ip igmp static-group 224.6.0.134 source 10.4.35.3
+ ip igmp static-group 224.6.0.135 source 10.4.35.3
+ ip igmp static-group 224.6.0.136 source 10.4.35.3
+ ip igmp static-group 224.6.0.137 source 10.4.35.3
+ ip igmp static-group 224.6.0.138 source 10.4.35.3
+ ip igmp static-group 224.6.0.139 source 10.4.35.3
+ ip igmp static-group 224.6.0.140 source 10.4.35.3
+ ip igmp static-group 224.6.0.141 source 10.4.35.3
+ ip igmp static-group 224.6.0.142 source 10.4.35.3
+ ip igmp static-group 224.6.0.143 source 10.4.35.3
+ ip igmp static-group 224.6.0.144 source 10.4.35.3
+ ip igmp static-group 224.6.0.145 source 10.4.35.3
+ ip igmp static-group 224.6.0.146 source 10.4.35.3
+ ip igmp static-group 224.6.0.147 source 10.4.35.3
+ ip igmp static-group 224.6.0.148 source 10.4.35.3
+ ip igmp static-group 224.6.0.149 source 10.4.35.3
+ ip igmp static-group 224.6.0.150 source 10.4.35.3
+ ip igmp static-group 224.6.0.151 source 10.4.35.4
+ ip igmp static-group 224.6.0.152 source 10.4.35.4
+ ip igmp static-group 224.6.0.153 source 10.4.35.4
+ ip igmp static-group 224.6.0.154 source 10.4.35.4
+ ip igmp static-group 224.6.0.155 source 10.4.35.4
+ ip igmp static-group 224.6.0.156 source 10.4.35.4
+ ip igmp static-group 224.6.0.157 source 10.4.35.4
+ ip igmp static-group 224.6.0.158 source 10.4.35.4
+ ip igmp static-group 224.6.0.159 source 10.4.35.4
+ ip igmp static-group 224.6.0.160 source 10.4.35.4
+ ip igmp static-group 224.6.0.161 source 10.4.35.4
+ ip igmp static-group 224.6.0.162 source 10.4.35.4
+ ip igmp static-group 224.6.0.163 source 10.4.35.4
+ ip igmp static-group 224.6.0.164 source 10.4.35.4
+ ip igmp static-group 224.6.0.165 source 10.4.35.4
+ ip igmp static-group 224.6.0.166 source 10.4.35.4
+ ip igmp static-group 224.6.0.167 source 10.4.35.4
+ ip igmp static-group 224.6.0.168 source 10.4.35.4
+ ip igmp static-group 224.6.0.169 source 10.4.35.4
+ ip igmp static-group 224.6.0.170 source 10.4.35.4
+ ip igmp static-group 224.6.0.171 source 10.4.35.4
+ ip igmp static-group 224.6.0.172 source 10.4.35.4
+ ip igmp static-group 224.6.0.173 source 10.4.35.4
+ ip igmp static-group 224.6.0.174 source 10.4.35.4
+ ip igmp static-group 224.6.0.175 source 10.4.35.4
+ ip igmp static-group 224.6.0.176 source 10.4.35.4
+ ip igmp static-group 224.6.0.177 source 10.4.35.4
+ ip igmp static-group 224.6.0.178 source 10.4.35.4
+ ip igmp static-group 224.6.0.179 source 10.4.35.4
+ ip igmp static-group 224.6.0.180 source 10.4.35.4
+ ip igmp static-group 224.6.0.181 source 10.4.35.4
+ ip igmp static-group 224.6.0.182 source 10.4.35.4
+ ip igmp static-group 224.6.0.183 source 10.4.35.4
+ ip igmp static-group 224.6.0.184 source 10.4.35.4
+ ip igmp static-group 224.6.0.185 source 10.4.35.4
+ ip igmp static-group 224.6.0.186 source 10.4.35.4
+ ip igmp static-group 224.6.0.187 source 10.4.35.4
+ ip igmp static-group 224.6.0.188 source 10.4.35.4
+ ip igmp static-group 224.6.0.189 source 10.4.35.4
+ ip igmp static-group 224.6.0.190 source 10.4.35.4
+ ip igmp static-group 224.6.0.191 source 10.4.35.4
+ ip igmp static-group 224.6.0.192 source 10.4.35.4
+ ip igmp static-group 224.6.0.193 source 10.4.35.4
+ ip igmp static-group 224.6.0.194 source 10.4.35.4
+ ip igmp static-group 224.6.0.195 source 10.4.35.4
+ ip igmp static-group 224.6.0.196 source 10.4.35.4
+ ip igmp static-group 224.6.0.197 source 10.4.35.4
+ ip igmp static-group 224.6.0.198 source 10.4.35.4
+ ip igmp static-group 224.6.0.199 source 10.4.35.4
+ ip igmp static-group 224.6.0.200 source 10.4.35.4
+ ip igmp static-group 224.6.0.201 source 10.4.35.6
+ ip igmp static-group 224.6.0.202 source 10.4.35.6
+ ip igmp static-group 224.6.0.203 source 10.4.35.6
+ ip igmp static-group 224.6.0.204 source 10.4.35.6
+ ip igmp static-group 224.6.0.205 source 10.4.35.6
+ ip igmp static-group 224.6.0.206 source 10.4.35.6
+ ip igmp static-group 224.6.0.207 source 10.4.35.6
+ ip igmp static-group 224.6.0.208 source 10.4.35.6
+ ip igmp static-group 224.6.0.209 source 10.4.35.6
+ ip igmp static-group 224.6.0.210 source 10.4.35.6
+ ip igmp static-group 224.6.0.211 source 10.4.35.7
+ ip igmp static-group 224.6.0.212 source 10.4.35.7
+ ip igmp static-group 224.6.0.213 source 10.4.35.7
+ ip igmp static-group 224.6.0.214 source 10.4.35.7
+ ip igmp static-group 224.6.0.215 source 10.4.35.7
+ ip igmp static-group 224.6.0.216 source 10.4.35.7
+ ip igmp static-group 224.6.0.217 source 10.4.35.7
+ ip igmp static-group 224.6.0.218 source 10.4.35.7
+ ip igmp static-group 224.6.0.219 source 10.4.35.7
+ ip igmp static-group 224.6.0.220 source 10.4.35.7
+ ip igmp static-group 224.6.0.221 source 10.4.35.8
+ ip igmp static-group 224.6.0.222 source 10.4.35.8
+ ip igmp static-group 224.6.0.223 source 10.4.35.8
+ ip igmp static-group 224.6.0.224 source 10.4.35.8
+ ip igmp static-group 224.6.0.225 source 10.4.35.8
+ ip igmp static-group 224.6.0.226 source 10.4.35.8
+ ip igmp static-group 224.6.0.227 source 10.4.35.8
+ ip igmp static-group 224.6.0.228 source 10.4.35.8
+ ip igmp static-group 224.6.0.229 source 10.4.35.8
+ ip igmp static-group 224.6.0.230 source 10.4.35.8
+ ip igmp static-group 224.6.0.1 source 10.4.35.5
+ ip igmp static-group 224.6.0.2 source 10.4.35.5
+ ip igmp static-group 224.6.0.3 source 10.4.35.5
+ ip igmp static-group 224.6.0.4 source 10.4.35.5
+ ip igmp static-group 224.6.0.5 source 10.4.35.5
+ ip igmp static-group 224.6.0.6 source 10.4.35.5
+ ip igmp static-group 224.6.0.7 source 10.4.35.5
+ ip igmp static-group 224.6.0.8 source 10.4.35.5
+ ip igmp static-group 224.6.0.9 source 10.4.35.5
+ ip igmp static-group 224.6.0.10 source 10.4.35.5
+ ip igmp static-group 224.6.0.11 source 10.4.35.5
+ ip igmp static-group 224.6.0.12 source 10.4.35.5
+ ip igmp static-group 224.6.0.13 source 10.4.35.5
+ ip igmp static-group 224.6.0.14 source 10.4.35.5
+ ip igmp static-group 224.6.0.15 source 10.4.35.5
+ ip igmp static-group 224.6.0.16 source 10.4.35.5
+ ip igmp static-group 224.6.0.17 source 10.4.35.5
+ ip igmp static-group 224.6.0.18 source 10.4.35.5
+ ip igmp static-group 224.6.0.19 source 10.4.35.5
+ ip igmp static-group 224.6.0.20 source 10.4.35.5
+ ip igmp static-group 224.6.0.21 source 10.4.35.5
+ ip igmp static-group 224.6.0.22 source 10.4.35.5
+ ip igmp static-group 224.6.0.23 source 10.4.35.5
+ ip igmp static-group 224.6.0.24 source 10.4.35.5
+ ip igmp static-group 224.6.0.25 source 10.4.35.5
+ ip igmp static-group 224.6.0.26 source 10.4.35.5
+ ip igmp static-group 224.6.0.27 source 10.4.35.5
+ ip igmp static-group 224.6.0.28 source 10.4.35.5
+ ip igmp static-group 224.6.0.29 source 10.4.35.5
+ ip igmp static-group 224.6.0.30 source 10.4.35.5
+ ip igmp static-group 224.6.0.31 source 10.4.35.5
+ ip igmp static-group 224.6.0.32 source 10.4.35.5
+ ip igmp static-group 224.6.0.33 source 10.4.35.5
+ ip igmp static-group 224.6.0.34 source 10.4.35.5
+ ip igmp static-group 224.6.0.35 source 10.4.35.5
+ ip igmp static-group 224.6.0.36 source 10.4.35.5
+ ip igmp static-group 224.6.0.37 source 10.4.35.5
+ ip igmp static-group 224.6.0.38 source 10.4.35.5
+ ip igmp static-group 224.6.0.39 source 10.4.35.5
+ ip igmp static-group 224.6.0.40 source 10.4.35.5
+ ip igmp static-group 224.6.0.41 source 10.4.35.5
+ ip igmp static-group 224.6.0.42 source 10.4.35.5
+ ip igmp static-group 224.6.0.43 source 10.4.35.5
+ ip igmp static-group 224.6.0.44 source 10.4.35.5
+ ip igmp static-group 224.6.0.45 source 10.4.35.5
+ ip igmp static-group 224.6.0.46 source 10.4.35.5
+ ip igmp static-group 224.6.0.47 source 10.4.35.5
+ ip igmp static-group 224.6.0.48 source 10.4.35.5
+ ip igmp static-group 224.6.0.49 source 10.4.35.5
+ ip igmp static-group 224.6.0.50 source 10.4.35.5
+ ip igmp static-group 224.6.0.51 source 10.4.35.5
+ ip igmp static-group 224.6.0.52 source 10.4.35.5
+ ip igmp static-group 224.6.0.53 source 10.4.35.5
+ ip igmp static-group 224.6.0.54 source 10.4.35.5
+ ip igmp static-group 224.6.0.55 source 10.4.35.5
+ ip igmp static-group 224.6.0.56 source 10.4.35.5
+ ip igmp static-group 224.6.0.57 source 10.4.35.5
+ ip igmp static-group 224.6.0.58 source 10.4.35.5
+ ip igmp static-group 224.6.0.59 source 10.4.35.5
+ ip igmp static-group 224.6.0.60 source 10.4.35.5
+ ip igmp static-group 224.6.0.61 source 10.4.35.5
+ ip igmp static-group 224.6.0.62 source 10.4.35.5
+ ip igmp static-group 224.6.0.63 source 10.4.35.5
+ ip igmp static-group 224.6.0.64 source 10.4.35.5
+ ip igmp static-group 224.6.0.65 source 10.4.35.5
+ ip igmp static-group 224.6.0.66 source 10.4.35.5
+ ip igmp static-group 224.6.0.67 source 10.4.35.5
+ ip igmp static-group 224.6.0.68 source 10.4.35.5
+ ip igmp static-group 224.6.0.69 source 10.4.35.5
+ ip igmp static-group 224.6.0.70 source 10.4.35.5
+ ip igmp static-group 224.6.0.71 source 10.4.35.5
+ ip igmp static-group 224.6.0.72 source 10.4.35.5
+ ip igmp static-group 224.6.0.73 source 10.4.35.5
+ ip igmp static-group 224.6.0.74 source 10.4.35.5
+ ip igmp static-group 224.6.0.75 source 10.4.35.5
+ ip igmp static-group 224.6.0.76 source 10.4.35.5
+ ip igmp static-group 224.6.0.77 source 10.4.35.5
+ ip igmp static-group 224.6.0.78 source 10.4.35.5
+ ip igmp static-group 224.6.0.79 source 10.4.35.5
+ ip igmp static-group 224.6.0.80 source 10.4.35.5
+ ip igmp static-group 224.6.0.81 source 10.4.35.5
+ ip igmp static-group 224.6.0.82 source 10.4.35.5
+ ip igmp static-group 224.6.0.83 source 10.4.35.5
+ ip igmp static-group 224.6.0.84 source 10.4.35.5
+ ip igmp static-group 224.6.0.85 source 10.4.35.5
+ ip igmp static-group 224.6.0.86 source 10.4.35.5
+ ip igmp static-group 224.6.0.87 source 10.4.35.5
+ ip igmp static-group 224.6.0.88 source 10.4.35.5
+ ip igmp static-group 224.6.0.89 source 10.4.35.5
+ ip igmp static-group 224.6.0.90 source 10.4.35.5
+ ip igmp static-group 224.6.0.91 source 10.4.35.5
+ ip igmp static-group 224.6.0.92 source 10.4.35.5
+ ip igmp static-group 224.6.0.93 source 10.4.35.5
+ ip igmp static-group 224.6.0.94 source 10.4.35.5
+ ip igmp static-group 224.6.0.95 source 10.4.35.5
+ ip igmp static-group 224.6.0.96 source 10.4.35.5
+ ip igmp static-group 224.6.0.97 source 10.4.35.5
+ ip igmp static-group 224.6.0.98 source 10.4.35.5
+ ip igmp static-group 224.6.0.99 source 10.4.35.5
+ ip igmp static-group 224.6.0.100 source 10.4.35.5
+ ip igmp static-group 224.6.0.101 source 10.4.35.5
+ ip igmp static-group 224.6.0.102 source 10.4.35.5
+ ip igmp static-group 224.6.0.103 source 10.4.35.5
+ ip igmp static-group 224.6.0.104 source 10.4.35.5
+ ip igmp static-group 224.6.0.105 source 10.4.35.5
+ ip igmp static-group 224.6.0.106 source 10.4.35.5
+ ip igmp static-group 224.6.0.107 source 10.4.35.5
+ ip igmp static-group 224.6.0.108 source 10.4.35.5
+ ip igmp static-group 224.6.0.109 source 10.4.35.5
+ ip igmp static-group 224.6.0.110 source 10.4.35.5
+ ip igmp static-group 224.6.0.111 source 10.4.35.5
+ ip igmp static-group 224.6.0.112 source 10.4.35.5
+ ip igmp static-group 224.6.0.113 source 10.4.35.5
+ ip igmp static-group 224.6.0.114 source 10.4.35.5
+ ip igmp static-group 224.6.0.115 source 10.4.35.5
+ ip igmp static-group 224.6.0.116 source 10.4.35.5
+ ip igmp static-group 224.6.0.117 source 10.4.35.5
+ ip igmp static-group 224.6.0.118 source 10.4.35.5
+ ip igmp static-group 224.6.0.119 source 10.4.35.5
+ ip igmp static-group 224.6.0.120 source 10.4.35.5
+ ip igmp static-group 224.6.0.121 source 10.4.35.5
+ ip igmp static-group 224.6.0.122 source 10.4.35.5
+ ip igmp static-group 224.6.0.123 source 10.4.35.5
+ ip igmp static-group 224.6.0.124 source 10.4.35.5
+ ip igmp static-group 224.6.0.125 source 10.4.35.5
+ ip igmp static-group 224.6.0.126 source 10.4.35.5
+ ip igmp static-group 224.6.0.127 source 10.4.35.5
+ ip igmp static-group 224.6.0.128 source 10.4.35.5
+ ip igmp static-group 224.6.0.129 source 10.4.35.5
+ ip igmp static-group 224.6.0.130 source 10.4.35.5
+ ip igmp static-group 224.6.0.131 source 10.4.35.5
+ ip igmp static-group 224.6.0.132 source 10.4.35.5
+ ip igmp static-group 224.6.0.133 source 10.4.35.5
+ ip igmp static-group 224.6.0.134 source 10.4.35.5
+ ip igmp static-group 224.6.0.135 source 10.4.35.5
+ ip igmp static-group 224.6.0.136 source 10.4.35.5
+ ip igmp static-group 224.6.0.137 source 10.4.35.5
+ ip igmp static-group 224.6.0.138 source 10.4.35.5
+ ip igmp static-group 224.6.0.139 source 10.4.35.5
+ ip igmp static-group 224.6.0.140 source 10.4.35.5
+ ip igmp static-group 224.6.0.141 source 10.4.35.5
+ ip igmp static-group 224.6.0.142 source 10.4.35.5
+ ip igmp static-group 224.6.0.143 source 10.4.35.5
+ ip igmp static-group 224.6.0.144 source 10.4.35.5
+ ip igmp static-group 224.6.0.145 source 10.4.35.5
+ ip igmp static-group 224.6.0.146 source 10.4.35.5
+ ip igmp static-group 224.6.0.147 source 10.4.35.5
+ ip igmp static-group 224.6.0.148 source 10.4.35.5
+ ip igmp static-group 224.6.0.149 source 10.4.35.5
+ ip igmp static-group 224.6.0.150 source 10.4.35.5
+ ip igmp static-group 224.6.0.151 source 10.4.35.5
+ ip igmp static-group 224.6.0.152 source 10.4.35.5
+ ip igmp static-group 224.6.0.153 source 10.4.35.5
+ ip igmp static-group 224.6.0.154 source 10.4.35.5
+ ip igmp static-group 224.6.0.155 source 10.4.35.5
+ ip igmp static-group 224.6.0.156 source 10.4.35.5
+ ip igmp static-group 224.6.0.157 source 10.4.35.5
+ ip igmp static-group 224.6.0.158 source 10.4.35.5
+ ip igmp static-group 224.6.0.159 source 10.4.35.5
+ ip igmp static-group 224.6.0.160 source 10.4.35.5
+ ip igmp static-group 224.6.0.161 source 10.4.35.5
+ ip igmp static-group 224.6.0.162 source 10.4.35.5
+ ip igmp static-group 224.6.0.163 source 10.4.35.5
+ ip igmp static-group 224.6.0.164 source 10.4.35.5
+ ip igmp static-group 224.6.0.165 source 10.4.35.5
+ ip igmp static-group 224.6.0.166 source 10.4.35.5
+ ip igmp static-group 224.6.0.167 source 10.4.35.5
+ ip igmp static-group 224.6.0.168 source 10.4.35.5
+ ip igmp static-group 224.6.0.169 source 10.4.35.5
+ ip igmp static-group 224.6.0.170 source 10.4.35.5
+ ip igmp static-group 224.6.0.171 source 10.4.35.5
+ ip igmp static-group 224.6.0.172 source 10.4.35.5
+ ip igmp static-group 224.6.0.173 source 10.4.35.5
+ ip igmp static-group 224.6.0.174 source 10.4.35.5
+ ip igmp static-group 224.6.0.175 source 10.4.35.5
+ ip igmp static-group 224.6.0.176 source 10.4.35.5
+ ip igmp static-group 224.6.0.177 source 10.4.35.5
+ ip igmp static-group 224.6.0.178 source 10.4.35.5
+ ip igmp static-group 224.6.0.179 source 10.4.35.5
+ ip igmp static-group 224.6.0.180 source 10.4.35.5
+ ip igmp static-group 224.6.0.181 source 10.4.35.5
+ ip igmp static-group 224.6.0.182 source 10.4.35.5
+ ip igmp static-group 224.6.0.183 source 10.4.35.5
+ ip igmp static-group 224.6.0.184 source 10.4.35.5
+ ip igmp static-group 224.6.0.185 source 10.4.35.5
+ ip igmp static-group 224.6.0.186 source 10.4.35.5
+ ip igmp static-group 224.6.0.187 source 10.4.35.5
+ ip igmp static-group 224.6.0.188 source 10.4.35.5
+ ip igmp static-group 224.6.0.189 source 10.4.35.5
+ ip igmp static-group 224.6.0.190 source 10.4.35.5
+ ip igmp static-group 224.6.0.191 source 10.4.35.5
+ ip igmp static-group 224.6.0.192 source 10.4.35.5
+ ip igmp static-group 224.6.0.193 source 10.4.35.5
+ ip igmp static-group 224.6.0.194 source 10.4.35.5
+ ip igmp static-group 224.6.0.195 source 10.4.35.5
+ ip igmp static-group 224.6.0.196 source 10.4.35.5
+ ip igmp static-group 224.6.0.197 source 10.4.35.5
+ ip igmp static-group 224.6.0.198 source 10.4.35.5
+ ip igmp static-group 224.6.0.199 source 10.4.35.5
+ ip igmp static-group 224.6.0.200 source 10.4.35.5
+ ip igmp static-group 224.6.0.201 source 10.4.35.9
+ ip igmp static-group 224.6.0.202 source 10.4.35.9
+ ip igmp static-group 224.6.0.203 source 10.4.35.9
+ ip igmp static-group 224.6.0.204 source 10.4.35.9
+ ip igmp static-group 224.6.0.205 source 10.4.35.9
+ ip igmp static-group 224.6.0.206 source 10.4.35.9
+ ip igmp static-group 224.6.0.207 source 10.4.35.9
+ ip igmp static-group 224.6.0.208 source 10.4.35.9
+ ip igmp static-group 224.6.0.209 source 10.4.35.9
+ ip igmp static-group 224.6.0.210 source 10.4.35.9
+ ip igmp static-group 224.6.0.211 source 10.4.35.9
+ ip igmp static-group 224.6.0.212 source 10.4.35.9
+ ip igmp static-group 224.6.0.213 source 10.4.35.9
+ ip igmp static-group 224.6.0.214 source 10.4.35.9
+ ip igmp static-group 224.6.0.215 source 10.4.35.9
+ ip igmp static-group 224.6.0.216 source 10.4.35.9
+ ip igmp static-group 224.6.0.217 source 10.4.35.9
+ ip igmp static-group 224.6.0.218 source 10.4.35.9
+ ip igmp static-group 224.6.0.219 source 10.4.35.9
+ ip igmp static-group 224.6.0.220 source 10.4.35.9
+ ip igmp static-group 224.6.0.221 source 10.4.35.9
+ ip igmp static-group 224.6.0.222 source 10.4.35.9
+ ip igmp static-group 224.6.0.223 source 10.4.35.9
+ ip igmp static-group 224.6.0.224 source 10.4.35.9
+ ip igmp static-group 224.6.0.225 source 10.4.35.9
+ ip igmp static-group 224.6.0.226 source 10.4.35.9
+ ip igmp static-group 224.6.0.227 source 10.4.35.9
+ ip igmp static-group 224.6.0.228 source 10.4.35.9
+ ip igmp static-group 224.6.0.229 source 10.4.35.9
+ ip igmp static-group 224.6.0.230 source 10.4.35.9
+ ip igmp static-group 239.7.0.51 source 10.4.36.201
+ ip igmp static-group 239.7.0.52 source 10.4.36.201
+ ip igmp static-group 239.7.0.53 source 10.4.36.201
+ ip igmp static-group 239.7.0.54 source 10.4.36.201
+ ip igmp static-group 239.7.0.55 source 10.4.36.201
+ ip igmp static-group 239.7.0.56 source 10.4.36.201
+ ip igmp static-group 239.7.0.57 source 10.4.36.201
+ ip igmp static-group 239.7.0.58 source 10.4.36.201
+ ip igmp static-group 239.7.0.59 source 10.4.36.201
+ ip igmp static-group 239.7.0.60 source 10.4.36.201
+ ip igmp static-group 239.7.0.61 source 10.4.36.201
+ ip igmp static-group 239.7.0.62 source 10.4.36.201
+ ip igmp static-group 239.7.0.51 source 10.4.36.211
+ ip igmp static-group 239.7.0.52 source 10.4.36.211
+ ip igmp static-group 239.7.0.53 source 10.4.36.211
+ ip igmp static-group 239.7.0.54 source 10.4.36.211
+ ip igmp static-group 239.7.0.55 source 10.4.36.211
+ ip igmp static-group 239.7.0.56 source 10.4.36.211
+ ip igmp static-group 239.7.0.57 source 10.4.36.211
+ ip igmp static-group 239.7.0.58 source 10.4.36.211
+ ip igmp static-group 239.7.0.59 source 10.4.36.211
+ ip igmp static-group 239.7.0.60 source 10.4.36.211
+ ip igmp static-group 239.7.0.61 source 10.4.36.211
+ ip igmp static-group 239.7.0.62 source 10.4.36.211
+ ip igmp static-group 239.7.0.51 source 10.4.36.202
+ ip igmp static-group 239.7.0.52 source 10.4.36.202
+ ip igmp static-group 239.7.0.53 source 10.4.36.202
+ ip igmp static-group 239.7.0.54 source 10.4.36.202
+ ip igmp static-group 239.7.0.55 source 10.4.36.202
+ ip igmp static-group 239.7.0.56 source 10.4.36.202
+ ip igmp static-group 239.7.0.57 source 10.4.36.202
+ ip igmp static-group 239.7.0.58 source 10.4.36.202
+ ip igmp static-group 239.7.0.59 source 10.4.36.202
+ ip igmp static-group 239.7.0.60 source 10.4.36.202
+ ip igmp static-group 239.7.0.61 source 10.4.36.202
+ ip igmp static-group 239.7.0.62 source 10.4.36.202
+ ip igmp static-group 239.7.0.51 source 10.4.36.212
+ ip igmp static-group 239.7.0.52 source 10.4.36.212
+ ip igmp static-group 239.7.0.53 source 10.4.36.212
+ ip igmp static-group 239.7.0.54 source 10.4.36.212
+ ip igmp static-group 239.7.0.55 source 10.4.36.212
+ ip igmp static-group 239.7.0.56 source 10.4.36.212
+ ip igmp static-group 239.7.0.57 source 10.4.36.212
+ ip igmp static-group 239.7.0.58 source 10.4.36.212
+ ip igmp static-group 239.7.0.59 source 10.4.36.212
+ ip igmp static-group 239.7.0.60 source 10.4.36.212
+ ip igmp static-group 239.7.0.61 source 10.4.36.212
+ ip igmp static-group 239.7.0.62 source 10.4.36.212
+ ip igmp static-group 224.6.0.152 source 10.4.35.2
+ ip igmp static-group 224.6.0.153 source 10.4.35.2
+ ip igmp static-group 239.6.1.1 source 10.4.34.101
+ ip igmp static-group 239.6.1.2 source 10.4.34.101
+ ip igmp static-group 239.6.1.3 source 10.4.34.101
+ ip igmp static-group 239.6.1.4 source 10.4.34.101
+ ip igmp static-group 239.6.1.5 source 10.4.34.102
+ ip igmp static-group 239.6.1.6 source 10.4.34.102
+ ip igmp static-group 239.6.1.7 source 10.4.34.102
+ ip igmp static-group 239.6.1.8 source 10.4.34.102
+ ip igmp static-group 239.6.1.9 source 10.4.34.103
+ ip igmp static-group 239.6.1.10 source 10.4.34.103
+ ip igmp static-group 239.6.1.11 source 10.4.34.103
+ ip igmp static-group 239.6.1.12 source 10.4.34.103
+ ip igmp static-group 239.6.1.13 source 10.4.34.104
+ ip igmp static-group 239.6.1.14 source 10.4.34.104
+ ip igmp static-group 239.6.1.15 source 10.4.34.104
+ ip igmp static-group 239.6.1.16 source 10.4.34.104
+ ip igmp static-group 239.6.1.17 source 10.4.34.105
+ ip igmp static-group 239.6.1.18 source 10.4.34.105
+ ip igmp static-group 239.6.1.19 source 10.4.34.105
+ ip igmp static-group 239.6.1.20 source 10.4.34.105
+ ip igmp static-group 239.6.1.21 source 10.4.34.106
+ ip igmp static-group 239.6.1.22 source 10.4.34.106
+ ip igmp static-group 239.6.1.23 source 10.4.34.106
+ ip igmp static-group 239.6.1.24 source 10.4.34.106
+ ip igmp static-group 239.6.1.25 source 10.4.34.107
+ ip igmp static-group 239.6.1.26 source 10.4.34.107
+ ip igmp static-group 239.6.1.27 source 10.4.34.107
+ ip igmp static-group 239.6.1.28 source 10.4.34.107
+ ip igmp static-group 239.6.1.29 source 10.4.34.108
+ ip igmp static-group 239.6.1.30 source 10.4.34.108
+ ip igmp static-group 239.6.1.31 source 10.4.34.108
+ ip igmp static-group 239.6.1.32 source 10.4.34.108
+ ip igmp static-group 239.6.1.33 source 10.4.34.109
+ ip igmp static-group 239.6.1.34 source 10.4.34.109
+ ip igmp static-group 239.6.1.35 source 10.4.34.109
+ ip igmp static-group 239.6.1.36 source 10.4.34.109
+ ip igmp static-group 239.6.1.37 source 10.4.34.110
+ ip igmp static-group 239.6.1.38 source 10.4.34.110
+ ip igmp static-group 239.6.1.39 source 10.4.34.110
+ ip igmp static-group 239.6.1.40 source 10.4.34.110
+ ip igmp static-group 239.6.1.41 source 10.4.34.111
+ ip igmp static-group 239.6.1.42 source 10.4.34.111
+ ip igmp static-group 239.6.1.43 source 10.4.34.111
+ ip igmp static-group 239.6.1.44 source 10.4.34.111
+ ip igmp static-group 239.6.1.45 source 10.4.34.112
+ ip igmp static-group 239.6.1.46 source 10.4.34.112
+ ip igmp static-group 239.6.1.47 source 10.4.34.112
+ ip igmp static-group 239.6.1.48 source 10.4.34.112
+ ip igmp static-group 239.6.1.49 source 10.4.34.113
+ ip igmp static-group 239.6.1.50 source 10.4.34.113
+ ip igmp static-group 239.6.1.51 source 10.4.34.113
+ ip igmp static-group 239.6.1.52 source 10.4.34.113
+ ip igmp static-group 239.6.1.53 source 10.4.34.114
+ ip igmp static-group 239.6.1.54 source 10.4.34.114
+ ip igmp static-group 239.6.1.55 source 10.4.34.114
+ ip igmp static-group 239.6.1.56 source 10.4.34.114
+ ip igmp static-group 239.6.1.57 source 10.4.34.115
+ ip igmp static-group 239.6.1.58 source 10.4.34.115
+ ip igmp static-group 239.6.1.59 source 10.4.34.115
+ ip igmp static-group 239.6.1.60 source 10.4.34.115
+ ip igmp static-group 239.6.1.61 source 10.4.34.116
+ ip igmp static-group 239.6.1.62 source 10.4.34.116
+ ip igmp static-group 239.6.1.63 source 10.4.34.116
+ ip igmp static-group 239.6.1.64 source 10.4.34.116
+ ip igmp static-group 239.6.1.65 source 10.4.34.117
+ ip igmp static-group 239.6.1.66 source 10.4.34.117
+ ip igmp static-group 239.6.1.67 source 10.4.34.117
+ ip igmp static-group 239.6.1.68 source 10.4.34.117
+ ip igmp static-group 239.6.1.69 source 10.4.34.118
+ ip igmp static-group 239.6.1.70 source 10.4.34.118
+ ip igmp static-group 239.6.1.71 source 10.4.34.118
+ ip igmp static-group 239.6.1.72 source 10.4.34.118
+ ip igmp static-group 239.6.1.73 source 10.4.34.119
+ ip igmp static-group 239.6.1.74 source 10.4.34.119
+ ip igmp static-group 239.6.1.75 source 10.4.34.119
+ ip igmp static-group 239.6.1.76 source 10.4.34.119
+ ip igmp static-group 239.6.1.77 source 10.4.34.120
+ ip igmp static-group 239.6.1.78 source 10.4.34.120
+ ip igmp static-group 239.6.1.79 source 10.4.34.120
+ ip igmp static-group 239.6.1.80 source 10.4.34.120
+ ip igmp static-group 239.7.0.232 source 192.168.3.137
+ ip igmp static-group 239.7.0.234 source 10.1.166.50
+!
+interface Vlan994
+ description ### Monitoring IRD-DEMODULATOR-DEXIN-OUTPUT for Chain-View ###
+ ip address 192.168.3.129 255.255.255.0 secondary
+ ip address 10.1.166.33 255.255.255.248
+ ip access-group 100 out
+ no ip redirects
+ ip pim sparse-mode
+!
+interface Vlan995
+ description ### Moniroting of Scrambled output via IRD/Evertz Card ###
+ ip address 10.1.166.54 255.255.255.248
+ ip pim sparse-mode
+!
+ip route 10.1.4.28 255.255.255.252 10.1.4.57 name FTP-SRV
+ip route 10.1.4.36 255.255.255.252 10.1.4.57 name TACACS-SRV
+ip route 10.4.21.249 255.255.255.255 10.1.4.57 name NTP-SRV
+ip route 10.4.34.0 255.255.255.0 10.1.166.17 name ENVIVIO-IRD-SOURCE
+ip route 10.4.35.0 255.255.255.0 10.1.166.21 name ENVIVIO-ENC-SOURCE
+ip route 10.4.36.0 255.255.255.0 10.1.166.25 name ENVIVIO-MUX-SOURCE
+no ip http server
+!
+ip pim ssm range SSM_Range
+!
+ip access-list standard SSM_Range
+ permit 239.7.0.232
+ permit 239.7.0.56
+ permit 239.7.0.57
+ permit 239.7.0.58
+ permit 239.7.0.59
+ permit 239.7.0.60
+ permit 239.7.0.61
+ permit 239.7.0.62
+ permit 239.7.0.51
+ permit 239.7.0.52
+ permit 239.7.0.53
+ permit 239.7.0.54
+ permit 239.7.0.55
+ permit 224.6.0.0 0.0.0.255
+ permit 239.6.0.0 0.0.0.255
+ permit 239.6.1.0 0.0.0.255
+ permit 239.5.1.0 0.0.0.255
+ permit 239.5.2.0 0.0.0.255
+ permit 239.4.1.0 0.0.0.255
+!
+!
+kron occurrence Backup_SWH at 0:15 recurring
+ policy-list Backup
+!
+kron policy-list Backup
+ cli write
+ cli copy system:/running-config tftp://10.1.4.30
+ cli write
+ cli copy system:/running-config tftp://10.1.4.30
+!
+logging 10.1.2.70
+access-list 100 permit ip any any
+access-list 100 deny   udp any any
+access-list 101 deny   udp any any
+access-list 101 permit ip any any
+!
+!
+tacacs-server host 10.1.4.38
+tacacs-server directed-request
+tacacs-server key 7 15314A4807637A767B
+banner login CCc
+*************************************************************************
+*       L E G A L   N O T I C E  --  Y O U    M U S T    R E A D        *
+*************************************************************************
+*       You must have explicit permission to access this device.        *
+*   All activities performed on this device are logged and monitored.   *
+*   violations of this policy may result in disciplinary/legal action.  *
+*************************************************************************
+*                         <BHARTI TELEMEDIA LTD>                        *
+*               UNAUTHORISED LOGIN STRICTLY PROHIBITED                  *
+*************************************************************************
+*       L E G A L   N O T I C E  --  Y O U    M U S T    R E A D        *
+*************************************************************************
+*  This Device belongs to <BHARTI AIRTEL LTD> and is for authorised use *
+*  only for work-related purposes. Unauthorized or improper use of      *
+*  this system may result in administrative disciplinary action and     *
+*  civil and criminal penalties. By continuing to use this system you   *
+*  indicate your awareness of and consent to these terms and conditions *
+*  of use. LOG OFF IMMEDIATELY if you do not agree to the conditions    *
+*  stated in this warning. <BHARI AIRTEL LTD> reserves the right to     *
+*  consent to a valid law enforcement request to search the network for *
+*  evidence of a crime stored within the network.                       *
+*                                                                       *
+*************************************************************************
+
+!
+line con 0
+ stopbits 1
+line vty 0 4
+ password 7 094F471A1A0A
+!
+ntp clock-period 17180041
+ntp server 10.4.21.249
+end
